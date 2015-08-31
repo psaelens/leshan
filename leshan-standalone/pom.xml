@@ -60,6 +60,12 @@ Contributors:
             <artifactId>gson</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+
         <!-- runtime dependencies -->
        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
