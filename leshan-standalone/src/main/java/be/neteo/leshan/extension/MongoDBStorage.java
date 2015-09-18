@@ -22,6 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 
@@ -35,6 +37,20 @@ public class MongoDBStorage {
     private final Gson gson;
     private final LwM2mServer server;
 
+    public final class ObjectResource {
+        private final int objectId;
+        private final int instanceId;
+        private final int resourceId;
+
+        private String value;
+
+        public ObjectResource(int objectId, int instanceId, int resourceId) {
+            this.objectId = objectId;
+            this.instanceId = instanceId;
+            this.resourceId = resourceId;
+        }
+    }
+
     private final ClientRegistryListener clientRegistryListener = new ClientRegistryListener() {
         @Override
         public void registered(Client client) {
@@ -47,9 +63,13 @@ public class MongoDBStorage {
             ValueResponse cResponse = server.send(client, request, TIMEOUT);
 
             LwM2mNode node = cResponse.getContent();
-            String response = gson.toJson(cResponse);
+            String response = gson.toJson(node);
 
             LOG.debug("Read /3/0/0: " + response);
+
+            List<ObjectResource> objectResources = new ArrayList<>();
+
+            document.append("objectResources", objectResources);
 
 
             collection.insertOne(document);
