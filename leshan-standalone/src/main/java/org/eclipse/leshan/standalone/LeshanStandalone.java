@@ -32,6 +32,8 @@ import java.security.spec.KeySpec;
 
 import javax.xml.bind.DatatypeConverter;
 
+import be.neteo.leshan.extension.MongoDBStorage;
+import be.neteo.leshan.extension.Neteo;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -130,6 +132,10 @@ public class LeshanStandalone {
 
         ServletHolder objectSpecServletHolder = new ServletHolder(new ObjectSpecServlet());
         root.addServlet(objectSpecServletHolder, "/api/objectspecs/*");
+
+        // Register Plugin
+        // new MongoDBStorage(lwServer);
+        new Neteo(lwServer);
 
         // Start jetty
         try {
