@@ -6,16 +6,18 @@ import com.google.gson.annotations.SerializedName;
 import org.eclipse.leshan.core.node.LwM2mNode;
 import org.eclipse.leshan.standalone.servlet.json.ClientSerializer;
 import org.eclipse.leshan.standalone.servlet.json.LwM2mNodeSerializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 public class NeteoClient {
 
+    private static final Logger LOG = LoggerFactory.getLogger(NeteoClient.class);
 
     public static class Device {
 
@@ -115,6 +117,36 @@ public class NeteoClient {
         }
     }
 
+    public static class Event {
+        private String endpoint;
+        private String path;
+        private String value;
+
+        public String getEndpoint() {
+            return endpoint;
+        }
+
+        public void setEndpoint(String endpoint) {
+            this.endpoint = endpoint;
+        }
+
+        public String getPath() {
+            return path;
+        }
+
+        public void setPath(String path) {
+            this.path = path;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+    }
+
     private final String host;
     private final Client client;
     private final Gson gson;
@@ -131,25 +163,61 @@ public class NeteoClient {
     }
 
     public boolean addDevice(Device device) {
-        Response response = client.target(this.host + "/api/devices")
+        String target = this.host + "/api/devices";
+        Response response = client.target(target)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(this.gson.toJson(device)));
 
-        System.out.println("status: " + response.getStatus());
-        System.out.println("headers: " + response.getHeaders());
-        System.out.println("body:" + response.readEntity(String.class));
+        LOG.info("API Endpoint: %s, Status: %s", target);
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("headers: " + response.getHeaders());
+            LOG.debug("body: %S", response.readEntity(String.class));
+        }
 
         return response.getStatus() >= 200 && response.getStatus() <= 299;
     }
 
     public boolean addSensor(String deviceId, Sensor sensor) {
-        Response response = client.target(this.host + "/api/devices/" + deviceId + "/sensors")
+        String target = this.host + "/api/devices/" + deviceId + "/sensors";
+        Response response = client.target(target)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(this.gson.toJson(sensor)));
 
-        System.out.println("status: " + response.getStatus());
-        System.out.println("headers: " + response.getHeaders());
-        System.out.println("body:" + response.readEntity(String.class));
+        LOG.info("API Endpoint: %s, Status: %s", target);
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("headers: " + response.getHeaders());
+            LOG.debug("body: %S", response.readEntity(String.class));
+        }
+
+        return response.getStatus() >= 200 && response.getStatus() <= 299;
+    }
+
+    public boolean updateSensor(String deviceId, Sensor sensor) {
+        String target = this.host + "/api/devices/" + deviceId + "/sensors/" + sensor.getId();
+        Response response = client.target(target)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .put(Entity.json(this.gson.toJson(sensor)));
+
+        LOG.info("API Endpoint: %s, Status: %s", target);
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("headers: " + response.getHeaders());
+            LOG.debug("body: %S", response.readEntity(String.class));
+        }
+
+        return response.getStatus() >= 200 && response.getStatus() <= 299;
+    }
+
+    public boolean publishEvent(Event event) {
+        String target = this.host + "/api/events";
+        Response response = client.target(target)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.json(this.gson.toJson(event)));
+
+        LOG.info("API Endpoint: %s, Status: %s", target);
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("headers: " + response.getHeaders());
+            LOG.debug("body: %S", response.readEntity(String.class));
+        }
 
         return response.getStatus() >= 200 && response.getStatus() <= 299;
     }
