@@ -82,6 +82,7 @@ public class Neteo {
                     Set<Integer> supportedResourceIds = supportedObjectResourceIds.get(objectId);
 
                     NeteoClient.Sensor sensor = new NeteoClient.Sensor();
+                    sensor.setId(objectId + "-" + objectInstanceId);
                     switch (objectId) {
                         case 3303:
                             sensor.setSensorClass("temperature");
@@ -97,19 +98,19 @@ public class Neteo {
                         if (resource != null) {
                             switch(id) {
                                 case 5700:
-                                    sensor.setValue(resource.getValue().toString());
+                                    sensor.setValue(resource.getValue().value.toString());
+                                    observeResource(client, objectId, objectInstanceId, id);
                                     break;
                                 case 5701:
-                                    sensor.setUnit(resource.getValue().toString());
+                                    sensor.setUnit(resource.getValue().value.toString());
                                     break;
                             }
-                            observeResource(client, objectId, objectInstanceId, id);
                         }
                     }
 
                     neteoClient.addSensor(device.getId(), sensor);
 
-                    instances.add(objectId + "/" + objectInstanceId);
+                    instances.add(sensor.getId());
                 }
             }
 
@@ -135,14 +136,25 @@ public class Neteo {
         }
 
         @Override
-        public void newValue(Observation observation, LwM2mNode value) {
+        public void newValue(Observation observation, LwM2mNode node) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Received notification from [{}] containing value [{}]", observation.getPath(),
-                        value.toString());
+                        node.toString());
             }
-            String data = new StringBuffer("{\"ep\":\"").append(observation.getClient().getEndpoint())
-                    .append("\",\"res\":\"").append(observation.getPath().toString()).append("\",\"val\":")
-                    .append(gson.toJson(value)).append("}").toString();
+
+            String endpoint = observation.getClient().getEndpoint();
+            if (node instanceof LwM2mResource) {
+                LwM2mResource resource = (LwM2mResource)node;
+                NeteoClient.Sensor sensor = new NeteoClient.Sensor();
+                sensor.setId(observation.getPath().getObjectId() + "-" + observation.getPath().getObjectInstanceId());
+
+                switch(node.getId()) {
+                    case 5700:
+                        sensor.setValue(resource.getValue().value.toString());
+                        neteoClient.updateSensor(endpoint, sensor);
+                        break;
+                }
+            }
 
         }
 
