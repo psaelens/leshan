@@ -22,6 +22,8 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 public class LinkObjectTest {
 
     @Test
@@ -149,6 +151,23 @@ public class LinkObjectTest {
         LinkObject[] objs = LinkObject.parse(input.getBytes());
         String ouput = LinkObject.serialyse(objs);
         Assert.assertEquals(input, ouput);
+
+    }
+
+    @Test
+    public void parse_without_first_slash() {
+
+        String input = "<3/0>,<3303/0>,<3304/0>,<3315/0>,<3301/0>,<3303/2>,<3303/3>,<3304/0>";
+        LinkObject[] objects = LinkObject.parse(input.getBytes());
+
+        assertEquals(8, objects.length);
+
+        assertEquals(3, (int)objects[0].getObjectId());
+        assertEquals(0, (int)objects[0].getObjectInstanceId());
+
+        assertEquals(3303, (int)objects[1].getObjectId());
+        assertEquals(0, (int) objects[1].getObjectInstanceId());
+
 
     }
 }

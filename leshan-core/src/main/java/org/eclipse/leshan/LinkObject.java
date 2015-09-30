@@ -65,7 +65,7 @@ public class LinkObject {
             this.attributes = Collections.unmodifiableMap(new HashMap<String, Object>());
         }
 
-        Matcher mat = Pattern.compile("(/(\\d+))(/(\\d+))?(/(\\d+))?").matcher(url);
+        Matcher mat = Pattern.compile("(/?(\\d+))(/(\\d+))?(/(\\d+))?").matcher(url);
 
         if (mat.find()) {
             objectId = mat.group(2) == null ? null : new Integer(mat.group(2));
