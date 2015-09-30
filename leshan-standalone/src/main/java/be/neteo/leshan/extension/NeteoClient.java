@@ -168,10 +168,10 @@ public class NeteoClient {
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(this.gson.toJson(device)));
 
-        LOG.info("API Endpoint: %s, Status: %s", target);
+        LOG.info("API Endpoint: {}, Status: {}", target, response.getStatus());
         if (LOG.isDebugEnabled()) {
             LOG.debug("headers: " + response.getHeaders());
-            LOG.debug("body: %S", response.readEntity(String.class));
+            LOG.debug("body: {}", response.readEntity(String.class));
         }
 
         return response.getStatus() >= 200 && response.getStatus() <= 299;
@@ -183,10 +183,10 @@ public class NeteoClient {
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(this.gson.toJson(sensor)));
 
-        LOG.info("API Endpoint: %s, Status: %s", target);
+        LOG.info("API Endpoint: {}, Status: {}", target, response.getStatus());
         if (LOG.isDebugEnabled()) {
             LOG.debug("headers: " + response.getHeaders());
-            LOG.debug("body: %S", response.readEntity(String.class));
+            LOG.debug("body: {}", response.readEntity(String.class));
         }
 
         return response.getStatus() >= 200 && response.getStatus() <= 299;
@@ -198,10 +198,10 @@ public class NeteoClient {
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .put(Entity.json(this.gson.toJson(sensor)));
 
-        LOG.info("API Endpoint: %s, Status: %s", target);
+        LOG.info("API Endpoint: {}, Status: {}", target, response.getStatus());
         if (LOG.isDebugEnabled()) {
             LOG.debug("headers: " + response.getHeaders());
-            LOG.debug("body: %S", response.readEntity(String.class));
+            LOG.debug("body: {}", response.readEntity(String.class));
         }
 
         return response.getStatus() >= 200 && response.getStatus() <= 299;
@@ -213,10 +213,10 @@ public class NeteoClient {
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(this.gson.toJson(event)));
 
-        LOG.info("API Endpoint: %s, Status: %s", target);
+        LOG.info("API Endpoint: {}, Status: {}", target, response.getStatus());
         if (LOG.isDebugEnabled()) {
             LOG.debug("headers: " + response.getHeaders());
-            LOG.debug("body: %S", response.readEntity(String.class));
+            LOG.debug("body: {}", response.readEntity(String.class));
         }
 
         return response.getStatus() >= 200 && response.getStatus() <= 299;
