@@ -1,0 +1,46 @@
+[
+  {
+    "name": "temperature",
+    "id" : 3303,
+    "resources" : [
+      {
+        "name": "value",
+        "id": 5700,
+        "observe": true
+      }
+    ]
+  },
+  {
+    "name": "humidity",
+    "id" : 3304,
+    "resources" : [
+      {
+        "name": "value",
+        "id": 5700,
+        "observe": true
+      }
+    ]
+  },
+  {
+    "name": "barometer",
+    "id" : 3315,
+    "resources" : [
+      {
+        "name": "value",
+        "id": 5700,
+        "observe": true
+      }
+    ]
+  },
+  {
+    "name": "illuminance",
+    "id" : 3301,
+    "resources" : [
+      {
+        "name": "value",
+        "id": 5700,
+        "observe": true
+      }
+    ]
+  }
+]
