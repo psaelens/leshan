@@ -23,11 +23,15 @@ public class NeteoClient {
 
         private String id;
 
+        private String name;
+
         @SerializedName("class")
         private String deviceClass;
         private String manufacturer;
         @SerializedName("serial_number")
         private String serialNumber;
+        @SerializedName("firmware_version")
+        private String firmwareVersion;
 
         private String address;
 
@@ -38,6 +42,14 @@ public class NeteoClient {
 
         public void setId(String id) {
             this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
 
         public String getAddress() {
@@ -70,6 +82,14 @@ public class NeteoClient {
 
         public void setSerialNumber(String serialNumber) {
             this.serialNumber = serialNumber;
+        }
+
+        public String getFirmwareVersion() {
+            return firmwareVersion;
+        }
+
+        public void setFirmwareVersion(String firmwareVersion) {
+            this.firmwareVersion = firmwareVersion;
         }
     }
 
