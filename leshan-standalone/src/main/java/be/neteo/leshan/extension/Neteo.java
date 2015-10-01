@@ -58,53 +58,58 @@ public class Neteo {
             device.setAddress(client.getAddress().getHostAddress());
             device.setId(client.getEndpoint());
 
+            try {
+                device.setManufacturer(readResource(client, 3, 0, 0).getValue().value.toString());
+                device.setName(readResource(client, 3, 0, 1).getValue().value.toString()); // Model Number
+                device.setSerialNumber(readResource(client, 3, 0, 2).getValue().value.toString());
+                device.setFirmwareVersion(readResource(client, 3, 0, 3).getValue().value.toString());
+            } catch (Exception e) {
+                LOG.error("Unable to read resource", e);
+            }
+
             neteoClient.addDevice(device);
 
 
             // Retrieve Sensors information
             // ---
-            // objectId => set of resource ids
-            Map<Integer, Set<Integer>> supportedObjectResourceIds = new HashMap<>();
-            // 3303 : temperature
-            supportedObjectResourceIds.put(3303, new HashSet<>(Arrays.asList(5700, 5701)));
-            // 3304 : humidity
-            supportedObjectResourceIds.put(3304, new HashSet<>(Arrays.asList(5700, 5701)));
+            Map<Integer, SmartObject> supportedSensors = SensorUtils.getSupportedSensorMap();
 
             // Cache of read instance (format: <objectId>/<instanceId>)
             Set<String> instances = new HashSet<>();
 
             for (LinkObject linkObject : objectLinks) {
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("LinkObject[objectId:{}; objectInstanceId:{}]", linkObject.getObjectId(), linkObject.getObjectInstanceId());
+                }
+
                 Integer objectId = linkObject.getObjectId();
                 Integer objectInstanceId = linkObject.getObjectInstanceId();
 
-                if (objectInstanceId != null && supportedObjectResourceIds.containsKey(objectId) && !instances.contains(objectId + "/" + objectInstanceId)) {
+                if (objectInstanceId != null && supportedSensors.containsKey(objectId) && !instances.contains(objectId + "/" + objectInstanceId)) {
 
-                    Set<Integer> supportedResourceIds = supportedObjectResourceIds.get(objectId);
+                    SmartObject smartObject = supportedSensors.get(objectId);
 
                     NeteoClient.Sensor sensor = new NeteoClient.Sensor();
                     sensor.setId(objectId + "-" + objectInstanceId);
-                    switch (objectId) {
-                        case 3303:
-                            sensor.setSensorClass("temperature");
-                            break;
-                        case 3304:
-                            sensor.setSensorClass("humidity");
-                            break;
-                    }
+                    sensor.setSensorClass(smartObject.getName());
 
-                    for (Integer id : supportedResourceIds) {
+                    for (Integer id : smartObject.getResourceIds()) {
 
                         LwM2mResource resource = readResource(client, objectId, objectInstanceId, id);
                         if (resource != null) {
-                            switch(id) {
-                                case 5700:
-                                    sensor.setValue(resource.getValue().value.toString());
-                                    observeResource(client, objectId, objectInstanceId, id);
-                                    break;
-                                case 5701:
-                                    sensor.setUnit(resource.getValue().value.toString());
-                                    break;
+                            SmartObjectResource smartObjectResource = smartObject.getResources().get(id);
+                            SensorUtils.set(sensor, smartObjectResource.getName(), resource.getValue().value.toString());
+                            //switch(id) {
+                            //    case 5700:
+                            //        sensor.setValue(resource.getValue().value.toString());
+                            if (smartObjectResource.isObserve()) {
+                                observeResource(client, objectId, objectInstanceId, id);
                             }
+                            //        break;
+                            //case 5701:
+                            //    sensor.setUnit(resource.getName().value.toString());
+                            //    break;
+                            //}
                         }
                     }
 
