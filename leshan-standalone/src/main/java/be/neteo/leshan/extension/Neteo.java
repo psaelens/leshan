@@ -2,12 +2,7 @@ package be.neteo.leshan.extension;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
-import org.apache.commons.io.FileUtils;
-import org.bson.Document;
+import org.codehaus.jackson.map.util.BeanUtil;
 import org.eclipse.leshan.LinkObject;
 import org.eclipse.leshan.ResponseCode;
 import org.eclipse.leshan.core.node.LwM2mNode;
@@ -27,7 +22,6 @@ import org.eclipse.leshan.standalone.servlet.json.LwM2mNodeSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,6 +41,8 @@ public class Neteo {
     private final ClientRegistryListener clientRegistryListener = new ClientRegistryListener() {
         @Override
         public void registered(Client client) {
+
+            LOG.info("Client {} registered.", client.getEndpoint());
 
             LinkObject[] objectLinks = client.getSortedObjectLinks();
 
@@ -99,17 +95,9 @@ public class Neteo {
                         if (resource != null) {
                             SmartObjectResource smartObjectResource = smartObject.getResources().get(id);
                             SensorUtils.set(sensor, smartObjectResource.getName(), resource.getValue().value.toString());
-                            //switch(id) {
-                            //    case 5700:
-                            //        sensor.setValue(resource.getValue().value.toString());
                             if (smartObjectResource.isObserve()) {
                                 observeResource(client, objectId, objectInstanceId, id);
                             }
-                            //        break;
-                            //case 5701:
-                            //    sensor.setUnit(resource.getName().value.toString());
-                            //    break;
-                            //}
                         }
                     }
 
@@ -147,17 +135,21 @@ public class Neteo {
                         node.toString());
             }
 
+            Map<Integer, SmartObject> supportedSensors = SensorUtils.getSupportedSensorMap();
+
             String endpoint = observation.getClient().getEndpoint();
             if (node instanceof LwM2mResource) {
-                LwM2mResource resource = (LwM2mResource)node;
+                LwM2mResource resource = (LwM2mResource) node;
                 NeteoClient.Sensor sensor = new NeteoClient.Sensor();
                 sensor.setId(observation.getPath().getObjectId() + "-" + observation.getPath().getObjectInstanceId());
 
-                switch(node.getId()) {
-                    case 5700:
-                        sensor.setValue(resource.getValue().value.toString());
-                        neteoClient.updateSensor(endpoint, sensor);
-                        break;
+                SmartObject smartObject = supportedSensors.get(observation.getPath().getObjectId());
+
+                SmartObjectResource smartObjectResource = smartObject.getResources().get(node.getId());
+
+                if (smartObjectResource != null) {
+                    SensorUtils.set(sensor, smartObjectResource.getName(), resource.getValue().value.toString());
+                    neteoClient.updateSensor(endpoint, sensor);
                 }
             }
 
@@ -208,9 +200,7 @@ public class Neteo {
         ReadRequest request = new ReadRequest(target);
         ValueResponse cResponse = this.server.send(client, request, TIMEOUT);
 
-        LwM2mResource node = (LwM2mResource) cResponse.getContent();
-
-        return node;
+        return (LwM2mResource) cResponse.getContent();
     }
 
     protected boolean observeResource(Client client, Integer objectId, Integer objectInstanceId, Integer resourceId) {
