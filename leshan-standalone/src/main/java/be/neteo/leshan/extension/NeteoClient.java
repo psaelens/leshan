@@ -14,6 +14,9 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class NeteoClient {
 
@@ -34,6 +37,8 @@ public class NeteoClient {
         private String firmwareVersion;
 
         private String address;
+
+        private List<Sensor> sensors = new ArrayList<>();
 
 
         public String getId() {
@@ -90,6 +95,10 @@ public class NeteoClient {
 
         public void setFirmwareVersion(String firmwareVersion) {
             this.firmwareVersion = firmwareVersion;
+        }
+
+        public void addSensor(Sensor sensor) {
+            this.sensors.add(sensor);
         }
     }
 
@@ -167,6 +176,36 @@ public class NeteoClient {
         }
     }
 
+    public static class Thing {
+        private String id;
+        private String description;
+        private Map<String, String> properties;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public Map<String, String> getProperties() {
+            return properties;
+        }
+
+        public void setProperties(Map<String, String> properties) {
+            this.properties = properties;
+        }
+    }
+
     private final String host;
     private final Client client;
     private final Gson gson;
@@ -182,34 +221,20 @@ public class NeteoClient {
         this.gson = gsonBuilder.create();
     }
 
+    public boolean addThing(Thing thing) {
+        String target = this.host + "/api/iot/things";
+        Entity<String> json = Entity.json(this.gson.toJson(thing));
+        return post(target, json);
+    }
+
     public boolean addDevice(Device device) {
         String target = this.host + "/api/devices";
-        Response response = client.target(target)
-                .request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(this.gson.toJson(device)));
-
-        LOG.info("API Endpoint: {}, Status: {}", target, response.getStatus());
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("headers: " + response.getHeaders());
-            LOG.debug("body: {}", response.readEntity(String.class));
-        }
-
-        return response.getStatus() >= 200 && response.getStatus() <= 299;
+        return post(target, Entity.json(this.gson.toJson(device)));
     }
 
     public boolean addSensor(String deviceId, Sensor sensor) {
         String target = this.host + "/api/devices/" + deviceId + "/sensors";
-        Response response = client.target(target)
-                .request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(this.gson.toJson(sensor)));
-
-        LOG.info("API Endpoint: {}, Status: {}", target, response.getStatus());
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("headers: " + response.getHeaders());
-            LOG.debug("body: {}", response.readEntity(String.class));
-        }
-
-        return response.getStatus() >= 200 && response.getStatus() <= 299;
+        return post(target, Entity.json(this.gson.toJson(sensor)));
     }
 
     public boolean updateSensor(String deviceId, Sensor sensor) {
@@ -229,9 +254,13 @@ public class NeteoClient {
 
     public boolean publishEvent(Event event) {
         String target = this.host + "/api/events";
+        return post(target, Entity.json(this.gson.toJson(event)));
+    }
+
+    private boolean post(String target, Entity<String> json) {
         Response response = client.target(target)
                 .request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(this.gson.toJson(event)));
+                .post(json);
 
         LOG.info("API Endpoint: {}, Status: {}", target, response.getStatus());
         if (LOG.isDebugEnabled()) {
