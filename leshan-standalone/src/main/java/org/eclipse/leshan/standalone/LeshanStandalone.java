@@ -30,6 +30,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.InvalidParameterSpecException;
 import java.security.spec.KeySpec;
 
+import com.skylaneoptics.onem2m.ipe.lwm2m.LwM2mInterworkingService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -98,7 +99,12 @@ public class LeshanStandalone {
             LOG.warn("Unable to load RPK.", e);
         }
 
+
+
         lwServer = builder.build();
+
+        new LwM2mInterworkingService(lwServer);
+
         lwServer.start();
 
         // Now prepare and start jetty
