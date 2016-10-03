@@ -102,9 +102,6 @@ public class LeshanStandalone {
 
 
         lwServer = builder.build();
-
-        new LwM2mInterworkingService(lwServer);
-
         lwServer.start();
 
         // Now prepare and start jetty
@@ -142,6 +139,9 @@ public class LeshanStandalone {
         } catch (Exception e) {
             LOG.error("jetty error", e);
         }
+
+        // Add Extension
+        new LwM2mInterworkingService(lwServer, server);
     }
 
     public void stop() {
