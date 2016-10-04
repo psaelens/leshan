@@ -30,19 +30,14 @@ import org.eclipse.om2m.commons.constants.ResourceType;
 import org.eclipse.om2m.commons.obix.*;
 import org.eclipse.om2m.commons.obix.io.ObixEncoder;
 
-import org.eclipse.om2m.commons.resource.AE;
-import org.eclipse.om2m.commons.resource.Container;
-import org.eclipse.om2m.commons.resource.ContentInstance;
 import org.onem2m.xml.protocols.Ae;
 import org.onem2m.xml.protocols.Cin;
 import org.onem2m.xml.protocols.Cnt;
 import org.onem2m.xml.protocols.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -52,11 +47,14 @@ import java.util.*;
  */
 public class LwM2mInterworkingService implements ClientRegistryListener, ObservationRegistryListener {
 
+    private static final Logger LOG = LoggerFactory.getLogger(LwM2mInterworkingService.class);
+
     LeshanServer leshanServer;
     Server httpServer;
     CloseableHttpClient httpClient;
 
-    private final String baseUrl = "http://127.0.0.1:8282";
+    private Properties properties = new Properties();
+    private final String baseUrl;
 
     public LwM2mInterworkingService(LeshanServer leshanServer, Server httpServer) {
         this.httpClient = HttpClients.createDefault();
@@ -65,12 +63,40 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
 
         this.leshanServer.getClientRegistry().addListener(this);
         this.leshanServer.getObservationRegistry().addListener(this);
+
+        String propFileName = "config.properties";
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(propFileName);
+            properties.load(inputStream);
+
+        } catch (Exception e) {
+            LOG.warn("property file '" + propFileName + "' not found.");
+
+            try {
+                inputStream = this.getClass().getResourceAsStream("/" + propFileName);
+                properties.load(inputStream);
+            } catch (Exception e2) {
+                LOG.warn("property file '" + propFileName + "' not found from classpath.");
+            }
+        } finally {
+            if (inputStream != null) {
+                try {
+                    // silently close the stream
+                    inputStream.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+        this.baseUrl = properties.getProperty("org.eclipse.om2m.cseBaseProtocol.default") + "://" + properties.get("org.eclipse.om2m.cseBaseAddress") + ":" + properties.get("org.eclipse.om2m.cseBasePort");
     }
 
     // -------------------------------------- ClientRegistryListener
 
     @Override
     public void registered(Client client) {
+        LOG.info("Registering client [{}] with links [{}] ...", client.getEndpoint(), toString(client.getObjectLinks()));
+
         Ae ae = new Ae();
 
         // resourceName
@@ -82,8 +108,7 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
         // labels
         //ae.getLbl().add("protocol/lwm2m");
 
-        createResource(ae, "/~/mn-cse/mn-cse", ResourceType.AE); //SP relative structured /~/cse-id/cse-name
-
+        createResource(ae, aeTargetId(), ResourceType.AE); //SP relative structured /~/cse-id/cse-name
 
         for (Tuple<SmartObject, Obj> tuple : toObix(client, client.getObjectLinks())) {
             SmartObject smartObject = tuple.getFirst();
@@ -93,14 +118,14 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
             cnt.setRn(smartObjectName);
             //cnt.getLbl().add("type/smartobject");
 
-            createResource(cnt, "/~/mn-cse/mn-cse/" + client.getEndpoint(), ResourceType.CONTAINER);
+            createResource(cnt, cntTargetId(client), ResourceType.CONTAINER);
 
             // create Container + content Instance for the Descriptor
             cnt = new Cnt();
             cnt.setRn("DESCRIPTOR");
             //cnt.getLbl().add("type/device");
 
-            createResource(cnt, "/~/mn-cse/mn-cse/" + client.getEndpoint() + "/" + smartObjectName, ResourceType.CONTAINER);
+            createResource(cnt, cntTargetId(client, smartObjectName), ResourceType.CONTAINER);
 
             // content instance
             Cin cin = new Cin();
@@ -110,15 +135,23 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
             cin.setCon(ObixEncoder.toString(tuple.getSecond()));
             //cin.getLbl().add("type/device");
 
-            createResource(cin, "/~/mn-cse/mn-cse/" + client.getEndpoint() + "/" + smartObjectName + "/DESCRIPTOR", ResourceType.CONTENT_INSTANCE);
+            createResource(cin, cinTargetId(client, smartObjectName, "DESCRIPTOR"), ResourceType.CONTENT_INSTANCE);
 
             // create Container for the Data
             cnt = new Cnt();
             cnt.setRn("DATA");
             //cnt.getLbl().add("type/device");
 
-            createResource(cnt, "/~/mn-cse/mn-cse/" + client.getEndpoint() + "/" + smartObjectName, ResourceType.CONTAINER);
+            createResource(cnt, cntTargetId(client, smartObjectName), ResourceType.CONTAINER);
         }
+    }
+
+    private String toString(LinkObject[] objectLinks) {
+        StringBuilder sb = new StringBuilder();
+        for(LinkObject link : objectLinks) {
+            sb.append(link.getUrl()).append(" ");
+        }
+        return sb.toString();
     }
 
 
@@ -129,7 +162,7 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
 
     @Override
     public void unregistered(Client client) {
-        deleteResource("/~/mn-cse/mn-cse/" + client.getEndpoint());
+        deleteResource(cntTargetId(client));
     }
 
     // -------------------------------------- ObservationRegistryListener
@@ -142,10 +175,6 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
 
     @Override
     public void newValue(Observation observation, LwM2mNode value) {
-
-        System.out.println("Observation, Path: " + observation.getPath());
-        System.out.println("Observation, RegistrationId: " + observation.getRegistrationId());
-
         Client client = leshanServer.getClientRegistry().findByRegistrationId(observation.getRegistrationId());
 
         observation.getPath();
@@ -167,7 +196,7 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
             cin.setCon(ObixEncoder.toString(obj));
             //cin.getLbl().add("type/device");
 
-            createResource(cin, "/~/mn-cse/mn-cse/" + client.getEndpoint() + "/" + smartObjectName + "/DATA", ResourceType.CONTENT_INSTANCE);
+            createResource(cin, cinTargetId(client, smartObjectName, "DATA"), ResourceType.CONTENT_INSTANCE);
 
         }
 
@@ -180,12 +209,28 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
 
     // --------------------------------------------------------------------- oneM2M Protocol over HTTP Binding
     // -----------------------------------------------------------------------------------------------------------
+    private String cinTargetId(Client client, String smartObjectName, String containerName) {
+        return String.format("/~/%s/%s/%s/%s/%s", properties.get("org.eclipse.om2m.cseBaseId"), properties.get("org.eclipse.om2m.cseBaseName"), client.getEndpoint(), smartObjectName, containerName);
+    }
+
+    private String cntTargetId(Client client, String smartObjectName) {
+        return String.format("/~/%s/%s/%s/%s", properties.get("org.eclipse.om2m.cseBaseId"), properties.get("org.eclipse.om2m.cseBaseName"), client.getEndpoint(), smartObjectName);
+    }
+
+    private String cntTargetId(Client client) {
+        return String.format("/~/%s/%s/%s", properties.get("org.eclipse.om2m.cseBaseId"), properties.get("org.eclipse.om2m.cseBaseName"), client.getEndpoint());
+    }
+
+    private String aeTargetId() {
+        return String.format("/~/%s/%s", properties.get("org.eclipse.om2m.cseBaseId"), properties.get("org.eclipse.om2m.cseBaseName"));
+    }
+
     private void createResource(Resource resource, String targetId, int type) {
         CloseableHttpResponse response = null;
         try {
             String uri = baseUrl + targetId;
 
-            System.out.println("Executing request " + uri + " + " + resource.getRn() + ".... \n");
+            LOG.info("Creating resource [" + resource.getRn() + "] (target: " + uri + ") ...");
 
             HttpPost httpPost = new HttpPost(uri);
 
@@ -198,15 +243,17 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
             httpPost.setEntity(input);
             response = this.httpClient.execute(httpPost);
 
-            System.out.println(response.getStatusLine());
+            LOG.debug("" + response.getStatusLine());
 
-            BufferedReader br = new BufferedReader(
-                    new InputStreamReader((response.getEntity().getContent())));
+            if (LOG.isDebugEnabled()) {
+                BufferedReader br = new BufferedReader(
+                        new InputStreamReader((response.getEntity().getContent())));
 
-            String output;
-            System.out.println("Output from Server .... \n");
-            while ((output = br.readLine()) != null) {
-                System.out.println(output);
+                String output;
+                LOG.debug("Response from Server:");
+                while ((output = br.readLine()) != null) {
+                    LOG.debug(output);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -338,7 +385,7 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
                         obj.add(new Int("value", (Integer) resource.getValue()));
                         break;
                     case FLOAT:
-                        obj.add(new Real("value", (Float) resource.getValue()));
+                        obj.add(new Real("value", (Double) resource.getValue()));
                         break;
                     case STRING:
                         obj.add(new Str("value", (String) resource.getValue()));
