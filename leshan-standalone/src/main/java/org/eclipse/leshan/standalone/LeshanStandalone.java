@@ -142,6 +142,7 @@ public class LeshanStandalone {
 
         // Add Extension
         new LwM2mInterworkingService(lwServer, server);
+        LOG.info("LW-M2M IPE started");
     }
 
     public void stop() {
