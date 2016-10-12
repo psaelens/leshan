@@ -19,7 +19,7 @@ public class SmartObjectsTest {
 
         assertNotNull(all);
         assertFalse(all.isEmpty());
-        assertEquals(18, all.size());
+        assertEquals(60, all.size());
 
         System.out.println(new Gson().toJson(all.get(0)));
 
