@@ -1016,7 +1016,7 @@
     ]
   },
   {
-    "name": "IPSO Digital Input",
+    "name": "Digital Input",
     "id": 3200,
     "instancetype": "multiple",
     "mandatory": false,
@@ -1042,7 +1042,7 @@
         "type": "integer",
         "range": "",
         "units": "",
-        "description": "The cumulative value of active state detected.  "
+        "description": "The cumulative value of active state detected."
       },
       {
         "id": 5502,
@@ -1053,7 +1053,7 @@
         "type": "boolean",
         "range": "",
         "units": "",
-        "description": "The polarity of the digital input as a Boolean (0 \u003d Normal, 1\u003d Reversed)"
+        "description": "The polarity of the digital input as a boolean (0 = Normal, 1= Reversed)"
       },
       {
         "id": 5503,
@@ -1075,7 +1075,7 @@
         "type": "integer",
         "range": "1-3",
         "units": "",
-        "description": "The edge selection as an integer (1 \u003d Falling edge, 2 \u003d Rising edge, 3 \u003d Both Rising and Falling edge)."
+        "description": "The edge selection as an integer (1 = Falling edge, 2 = Rising edge, 3 = Both Rising and Falling edge)."
       },
       {
         "id": 5505,
@@ -1097,7 +1097,7 @@
         "type": "string",
         "range": "",
         "units": "",
-        "description": "The application type of the sensor or actuator as a string, for instance, “Air Pressure”"
+        "description": "The application type of the sensor or actuator as a string, for instance, \u201cAir Pressure\u201d"
       },
       {
         "id": 5751,
@@ -1113,7 +1113,7 @@
     ]
   },
   {
-    "name": "IPSO Digital Output",
+    "name": "Digital Output",
     "id": 3201,
     "instancetype": "multiple",
     "mandatory": false,
@@ -1139,7 +1139,7 @@
         "type": "boolean",
         "range": "",
         "units": "",
-        "description": "The polarity of a digital ouput as a Boolean (0 \u003d Normal, 1\u003d Reversed)."
+        "description": "The polarity of a digital ouput as a boolean (0 = Normal, 1= Reversed)."
       },
       {
         "id": 5750,
@@ -1150,16 +1150,16 @@
         "type": "string",
         "range": "",
         "units": "",
-        "description": "The application type of the output as a string, for instance, “LED”"
+        "description": "The application type of the output as a string, for instance, \u201cLED\u201d"
       }
     ]
   },
   {
-    "name": "IPSO Analog Input",
+    "name": "Analog Input",
     "id": 3202,
     "instancetype": "multiple",
     "mandatory": false,
-    "description": "Generic analog input for non-specific sensors ",
+    "description": "Generic analog input for non-specific sensors",
     "resourcedefs": [
       {
         "id": 5600,
@@ -1217,17 +1217,6 @@
         "description": "The maximum value that can be measured by the sensor"
       },
       {
-        "id": 5605,
-        "name": "Reset Min and Max Measured Values",
-        "operations": "E",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "opaque",
-        "range": "",
-        "units": "",
-        "description": "Reset the Min and Max Measured Values to Current Value"
-      },
-      {
         "id": 5750,
         "name": "Application Type",
         "operations": "RW",
@@ -1236,7 +1225,7 @@
         "type": "string",
         "range": "",
         "units": "",
-        "description": "The application type of the sensor or actuator as a string, for instance, “Air Pressure”"
+        "description": "The application type of the sensor or actuator as a string, for instance, \u201cAir Pressure\u201d"
       },
       {
         "id": 5751,
@@ -1248,38 +1237,27 @@
         "range": "",
         "units": "",
         "description": "The type of the sensor, for instance PIR type"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
       }
     ]
   },
   {
-    "name": "IPSO Analog Output",
+    "name": "Analog Output",
     "id": 3203,
     "instancetype": "multiple",
     "mandatory": false,
     "description": "This IPSO object is a generic object that can be used with any kind of analog output interface.",
     "resourcedefs": [
-      {
-        "id": 5603,
-        "name": "Min Range Value",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "float",
-        "range": "",
-        "units": "",
-        "description": "The minimum value that can be measured by the sensor"
-      },
-      {
-        "id": 5604,
-        "name": "Max Range Value",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "float",
-        "range": "",
-        "units": "",
-        "description": "The maximum value that can be measured by the sensor"
-      },
       {
         "id": 5650,
         "name": "Analog Output Current Value",
@@ -1300,38 +1278,7 @@
         "type": "string",
         "range": "",
         "units": "",
-        "description": "If present, the application type of the actuator as a string, for instance, “Thermostat”"
-      }
-    ]
-  },
-  {
-    "name": "IPSO Generic Sensor",
-    "id": 3300,
-    "instancetype": "multiple",
-    "mandatory": false,
-    "description": "This IPSO object allow the description of a generic sensor. It is based on the description of a value and a unit according to the UCUM specification. Thus, any type of value defined within this specification can be reporting using this object. \nSpecific object for a given range of sensors is described later in the document, enabling to identify the type of sensors directly from its Object ID. This object may be used as a generic object if a dedicated one does not exist. \n",
-    "resourcedefs": [
-      {
-        "id": 5601,
-        "name": "Min Measured Value",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "float",
-        "range": "",
-        "units": "Defined by “Units” resource.",
-        "description": "The minimum value measured by the sensor since power ON or reset"
-      },
-      {
-        "id": 5602,
-        "name": "Max Measured Value",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "float",
-        "range": "",
-        "units": "Defined by “Units” resource.",
-        "description": "The maximum value measured by the sensor since power ON or reset"
+        "description": "If present, the application type of the actuator as a string, for instance, \u201cThermostat\u201d"
       },
       {
         "id": 5603,
@@ -1341,7 +1288,7 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "",
         "description": "The minimum value that can be measured by the sensor"
       },
       {
@@ -1352,20 +1299,18 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
-        "description": "The maximum value that can be measured by the sensor"
-      },
-      {
-        "id": 5605,
-        "name": "Reset Min and Max Measured Values",
-        "operations": "E",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "opaque",
-        "range": "",
         "units": "",
-        "description": "Reset the Min and Max Measured Values to Current Value"
-      },
+        "description": "The maximum value that can be measured by the sensor"
+      }
+    ]
+  },
+  {
+    "name": "Generic Sensor",
+    "id": 3300,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object allow the description of a generic sensor. It is based on the description of a value and a unit according to the UCUM specification. Thus, any type of value defined within this specification can be reporting using this object.\nSpecific object for a given range of sensors is described later in the document, enabling to identify the type of sensors directly from its Object ID. This object may be used as a generic object if a dedicated one does not exist.",
+    "resourcedefs": [
       {
         "id": 5700,
         "name": "Sensor Value",
@@ -1374,7 +1319,7 @@
         "mandatory": true,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "Last or Current Measured Value from the Sensor"
       },
       {
@@ -1386,7 +1331,51 @@
         "type": "float",
         "range": "",
         "units": "",
-        "description": "Measurement Units Definition e.g. “Cel” for Temperature in Celsius."
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius."
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
       },
       {
         "id": 5750,
@@ -1397,7 +1386,7 @@
         "type": "string",
         "range": "",
         "units": "",
-        "description": "If present, the application type of the sensor as a string, for instance, “CO2”"
+        "description": "If present, the application type of the sensor as a string, for instance, \u201cCO2\u201d"
       },
       {
         "id": 5751,
@@ -1409,16 +1398,38 @@
         "range": "",
         "units": "",
         "description": "The type of the sensor (for instance PIR type)"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
       }
     ]
   },
   {
-    "name": "IPSO Illuminance",
+    "name": "Illuminance",
     "id": 3301,
     "instancetype": "multiple",
     "mandatory": false,
-    "description": "Illuminance sensor, example units \u003d lx",
+    "description": "Illuminance sensor, example units = lx",
     "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The current value of the luminosity sensor."
+      },
       {
         "id": 5601,
         "name": "Min Measured Value",
@@ -1427,7 +1438,7 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The minimum value measured by the sensor since power ON or reset"
       },
       {
@@ -1438,7 +1449,7 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The maximum value measured by the sensor since power ON or reset"
       },
       {
@@ -1449,7 +1460,7 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The minimum value that can be measured by the sensor"
       },
       {
@@ -1460,7 +1471,7 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The maximum value that can be measured by the sensor"
       },
       {
@@ -1475,17 +1486,6 @@
         "description": "Reset the Min and Max Measured Values to Current Value"
       },
       {
-        "id": 5700,
-        "name": "Sensor Value",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": true,
-        "type": "float",
-        "range": "",
-        "units": "Defined by “Units” resource.",
-        "description": "The current value of the luminosity sensor."
-      },
-      {
         "id": 5701,
         "name": "Sensor Units",
         "operations": "R",
@@ -1494,12 +1494,12 @@
         "type": "string",
         "range": "",
         "units": "",
-        "description": "If present, the type of sensor defined as the UCUM Unit Definition e.g. “Cel” for Temperature in Celcius."
+        "description": "If present, the type of sensor defined as the UCUM Unit Definition e.g. \u201cCel\u201d for Temperature in Celcius."
       }
     ]
   },
   {
-    "name": "IPSO Presence",
+    "name": "Presence",
     "id": 3302,
     "instancetype": "multiple",
     "mandatory": false,
@@ -1525,7 +1525,7 @@
         "type": "integer",
         "range": "",
         "units": "",
-        "description": "The cumulative value of active state detected.  "
+        "description": "The cumulative value of active state detected."
       },
       {
         "id": 5505,
@@ -1574,12 +1574,23 @@
     ]
   },
   {
-    "name": "IPSO Temperature",
+    "name": "Temperature",
     "id": 3303,
     "instancetype": "multiple",
     "mandatory": false,
-    "description": "Description: This IPSO object should be used with a temperature sensor to report a temperature measurement.  It also provides resources for minimum/maximum measured values and the minimum/maximum range that can be measured by the temperature sensor. An example measurement unit is degrees Celsius (ucum:Cel). ",
+    "description": "Description: This IPSO object should be used with a temperature sensor to report a temperature measurement.  It also provides resources for minimum\/maximum measured values and the minimum\/maximum range that can be measured by the temperature sensor. An example measurement unit is degrees Celsius (ucum:Cel).",
     "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
       {
         "id": 5601,
         "name": "Min Measured Value",
@@ -1588,7 +1599,7 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The minimum value measured by the sensor since power ON or reset"
       },
       {
@@ -1599,7 +1610,7 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The maximum value measured by the sensor since power ON or reset"
       },
       {
@@ -1610,19 +1621,30 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The minimum value that can be measured by the sensor"
       },
       {
         "id": 5604,
         "name": "Max Range Value",
-        "operations": "E",
+        "operations": "R",
         "instancetype": "single",
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius."
       },
       {
         "id": 5605,
@@ -1634,38 +1656,27 @@
         "range": "",
         "units": "",
         "description": "Reset the Min and Max Measured Values to Current Value"
-      },
-      {
-        "id": 5700,
-        "name": "Sensor Value",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": true,
-        "type": "float",
-        "range": "",
-        "units": "Defined by “Units” resource.",
-        "description": "Last or Current Measured Value from the Sensor"
-      },
-      {
-        "id": 5701,
-        "name": "Sensor Units",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "string",
-        "range": "",
-        "units": "",
-        "description": "Measurement Units Definition e.g. “Cel” for Temperature in Celsius."
       }
     ]
   },
   {
-    "name": "IPSO Humidity",
+    "name": "Humidity",
     "id": 3304,
     "instancetype": "multiple",
     "mandatory": false,
-    "description": "Description: This IPSO object should be used with a humidity sensor to report a humidity measurement.  It also provides resources for minimum/maximum measured values and the minimum/maximum range that can be measured by the humidity sensor. An example measurement unit is relative humidity as a percentage (ucum:%). ",
+    "description": "Description: This IPSO object should be used with a humidity sensor to report a humidity measurement.  It also provides resources for minimum\/maximum measured values and the minimum\/maximum range that can be measured by the humidity sensor. An example measurement unit is relative humidity as a percentage (ucum:%).",
     "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
       {
         "id": 5601,
         "name": "Min Measured Value",
@@ -1674,7 +1685,7 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The minimum value measured by the sensor since power ON or reset"
       },
       {
@@ -1685,7 +1696,7 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The maximum value measured by the sensor since power ON or reset"
       },
       {
@@ -1694,9 +1705,9 @@
         "operations": "R",
         "instancetype": "single",
         "mandatory": false,
-        "type": "string",
+        "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The minimum value that can be measured by the sensor"
       },
       {
@@ -1707,30 +1718,8 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The maximum value that can be measured by the sensor"
-      },
-      {
-        "id": 5605,
-        "name": "Reset Min and Max Measured Values",
-        "operations": "E",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "opaque",
-        "range": "",
-        "units": "",
-        "description": "Reset the Min and Max Measured Values to Current Value"
-      },
-      {
-        "id": 5700,
-        "name": "Sensor Value",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": true,
-        "type": "float",
-        "range": "",
-        "units": "Defined by “Units” resource.",
-        "description": "Last or Current Measured Value from the Sensor"
       },
       {
         "id": 5701,
@@ -1741,17 +1730,8 @@
         "type": "string",
         "range": "",
         "units": "",
-        "description": "Measurement Units Definition e.g. “Cel” for Temperature in Celsius."
-      }
-    ]
-  },
-  {
-    "name": "IPSO Power Measurement",
-    "id": 3305,
-    "instancetype": "multiple",
-    "mandatory": false,
-    "description": "This IPSO object should be used over a power measurement sensor to report a remote power measurement.  It also provides resources for minimum/maximum measured values and the minimum/maximum range for both active and reactive power. Il also provides resources for cumulative energy, calibration, and the power factor. ",
-    "resourcedefs": [
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius."
+      },
       {
         "id": 5605,
         "name": "Reset Min and Max Measured Values",
@@ -1762,7 +1742,16 @@
         "range": "",
         "units": "",
         "description": "Reset the Min and Max Measured Values to Current Value"
-      },
+      }
+    ]
+  },
+  {
+    "name": "Power Measurement",
+    "id": 3305,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used over a power measurement sensor to report a remote power measurement.  It also provides resources for minimum\/maximum measured values and the minimum\/maximum range for both active and reactive power. Il also provides resources for cumulative energy, calibration, and the power factor.",
+    "resourcedefs": [
       {
         "id": 5800,
         "name": "Instantaneous active power",
@@ -1798,7 +1787,7 @@
       },
       {
         "id": 5803,
-        "name": "Min  Range  active power",
+        "name": "Min Range active power",
         "operations": "R",
         "instancetype": "single",
         "mandatory": false,
@@ -1820,7 +1809,7 @@
       },
       {
         "id": 5805,
-        "name": "Cumulative active power ",
+        "name": "Cumulative active power",
         "operations": "R",
         "instancetype": "single",
         "mandatory": false,
@@ -1838,7 +1827,7 @@
         "type": "float",
         "range": "",
         "units": "W",
-        "description": "Request an active power calibration by writing the value of a calibrated load. "
+        "description": "Request an active power calibration by writing the value of a calibrated load."
       },
       {
         "id": 5810,
@@ -1864,7 +1853,7 @@
       },
       {
         "id": 5812,
-        "name": "Max Measured  reactive power",
+        "name": "Max Measured reactive power",
         "operations": "R",
         "instancetype": "single",
         "mandatory": false,
@@ -1875,7 +1864,7 @@
       },
       {
         "id": 5813,
-        "name": "Min  Range  reactive power",
+        "name": "Min Range reactive power",
         "operations": "R",
         "instancetype": "single",
         "mandatory": false,
@@ -1919,7 +1908,7 @@
       },
       {
         "id": 5820,
-        "name": "Power factor",
+        "name": "Power Factor",
         "operations": "R",
         "instancetype": "single",
         "mandatory": false,
@@ -1948,38 +1937,38 @@
         "type": "opaque",
         "range": "",
         "units": "",
-        "description": "Reset both cumulative active/reactive power"
+        "description": "Reset both cumulative active\/reactive power"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
       }
     ]
   },
   {
-    "name": "IPSO Actuation",
+    "name": "Actuation",
     "id": 3306,
     "instancetype": "multiple",
     "mandatory": false,
-    "description": "This IPSO object is dedicated to remote actuation such as ON/OFF action or dimming. A multi-state output can also be described as a string. This is useful to send pilot wire orders for instance. It also provides a resource to reflect the time that the device has been switched on. ",
+    "description": "This IPSO object is dedicated to remote actuation such as ON\/OFF action or dimming. A multi-state output can also be described as a string. This is useful to send pilot wire orders for instance. It also provides a resource to reflect the time that the device has been switched on.",
     "resourcedefs": [
       {
-        "id": 5750,
-        "name": "Application Type",
-        "operations": "RW",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "string",
-        "range": "",
-        "units": "",
-        "description": "The Application type of the device, for example “Motion Closure”."
-      },
-      {
         "id": 5850,
-        "name": "On/Off",
+        "name": "On\/Off",
         "operations": "RW",
         "instancetype": "single",
         "mandatory": true,
         "type": "boolean",
         "range": "",
         "units": "",
-        "description": "On/Off\n\n"
+        "description": "On\/Off"
       },
       {
         "id": 5851,
@@ -1990,7 +1979,7 @@
         "type": "integer",
         "range": "0-100",
         "units": "%",
-        "description": "This resource represents a light dimmer setting, which has an Integer value between 0 and 100 as a percentage."
+        "description": "This resource represents a light dimmer setting, which has an integer value between 0 and 100 as a percentage."
       },
       {
         "id": 5852,
@@ -2013,26 +2002,48 @@
         "range": "",
         "units": "",
         "description": "A string describing a state for multiple level output such as Pilot Wire"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The Application type of the device, for example \u201cMotion Closure\u201d."
       }
     ]
   },
   {
-    "name": "IPSO Set Point",
+    "name": "Set Point",
     "id": 3308,
     "instancetype": "multiple",
     "mandatory": false,
     "description": "Description: This IPSO object should be used to set a desired value to a controller, such as a thermostat. This object enables a setpoint to be expressed units defined in the UCUM specification, to match an associated sensor or measurement value. A special resource is added to set the colour of an object.",
     "resourcedefs": [
       {
+        "id": 5900,
+        "name": "Set Point Value",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The setpoint value."
+      },
+      {
         "id": 5701,
-        "name": "Units",
+        "name": "Sensor Units",
         "operations": "R",
         "instancetype": "single",
         "mandatory": false,
         "type": "string",
         "range": "",
         "units": "",
-        "description": "If present, the type of sensor defined as the UCUM Unit Definition e.g. “Cel” for Temperature in Celcius."
+        "description": "If present, the type of sensor defined as the UCUM Unit Definition e.g. \u201cCel\u201d for Temperature in Celcius."
       },
       {
         "id": 5706,
@@ -2054,23 +2065,12 @@
         "type": "string",
         "range": "",
         "units": "",
-        "description": "The Application type of the device, for example “Motion Closure”."
-      },
-      {
-        "id": 5900,
-        "name": "Set Point Value",
-        "operations": "RW",
-        "instancetype": "single",
-        "mandatory": true,
-        "type": "float",
-        "range": "",
-        "units": "Defined by “Units” resource.\t",
-        "description": "The setpoint value. "
+        "description": "The Application type of the device, for example \u201cMotion Closure\u201d."
       }
     ]
   },
   {
-    "name": "IPSO Load Control",
+    "name": "Load Control",
     "id": 3310,
     "instancetype": "multiple",
     "mandatory": false,
@@ -2129,7 +2129,7 @@
         "type": "string",
         "range": "0-100",
         "units": "%",
-        "description": "Defines the maximum energy usage of the receivng device, as a percentage of the device\u0027s normal maximum energy usage."
+        "description": "Defines the maximum energy usage of the receivng device, as a percentage of the device's normal maximum energy usage."
       },
       {
         "id": 5828,
@@ -2145,22 +2145,66 @@
     ]
   },
   {
-    "name": "IPSO Light Control",
+    "name": "Light Control",
     "id": 3311,
     "instancetype": "multiple",
     "mandatory": false,
     "description": "Description: This Object is used to control a light source, such as a LED or other light.  It allows a light to be turned on or off and its dimmer setting to be control as a % between 0 and 100. An optional colour setting enables a string to be used to indicate the desired colour.",
     "resourcedefs": [
       {
-        "id": 5701,
-        "name": "Sensor Units",
+        "id": 5850,
+        "name": "On\/Off",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "boolean",
+        "range": "",
+        "units": "",
+        "description": "This resource represents a light, which can be controlled, the setting of which is a boolean value (1,0) where 1 is on and 0 is off."
+      },
+      {
+        "id": 5851,
+        "name": "Dimmer",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "0-100",
+        "units": "%",
+        "description": "This resource represents a light dimmer setting, which has an integer value between 0 and 100 as a percentage."
+      },
+      {
+        "id": 5852,
+        "name": "On Time",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "sec",
+        "description": "The time in seconds that the light has been on. Writing a value of 0 resets the counter."
+      },
+      {
+        "id": 5805,
+        "name": "Cumulative active power",
         "operations": "R",
         "instancetype": "single",
         "mandatory": false,
-        "type": "string",
+        "type": "float",
+        "range": "",
+        "units": "Wh",
+        "description": "The total power in Wh that the light has used."
+      },
+      {
+        "id": 5820,
+        "name": "Power Factor",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
         "range": "",
         "units": "",
-        "description": "If present, the type of sensor defined as the UCUM Unit Definition e.g. “Cel” for Temperature in Celcius."
+        "description": "The power factor of the light."
       },
       {
         "id": 5706,
@@ -2174,101 +2218,35 @@
         "description": "A string representing a value in some color space"
       },
       {
-        "id": 5805,
-        "name": "Cumulative active power ",
+        "id": 5701,
+        "name": "Sensor Units",
         "operations": "R",
         "instancetype": "single",
         "mandatory": false,
-        "type": "float",
-        "range": "",
-        "units": "Wh",
-        "description": "The total power in Wh that the light has used."
-      },
-      {
-        "id": 5820,
-        "name": "Power factor",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "float",
+        "type": "string",
         "range": "",
         "units": "",
-        "description": "The power factor of the light."
-      },
-      {
-        "id": 5850,
-        "name": "On/Off",
-        "operations": "RW",
-        "instancetype": "single",
-        "mandatory": true,
-        "type": "boolean",
-        "range": "",
-        "units": "",
-        "description": "This resource represents a light, which can be controlled, the setting of which is a Boolean value (1,0) where 1 is on and 0 is off."
-      },
-      {
-        "id": 5851,
-        "name": "Dimmer",
-        "operations": "RW",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "integer",
-        "range": "0-100",
-        "units": "%",
-        "description": "This resource represents a light dimmer setting, which has an Integer value between 0 and 100 as a percentage."
-      },
-      {
-        "id": 5852,
-        "name": "On Time",
-        "operations": "RW",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "integer",
-        "range": "",
-        "units": "sec",
-        "description": "The time in seconds that the light has been on. Writing a value of 0 resets the counter."
+        "description": "If present, the type of sensor defined as the UCUM Unit Definition e.g. \u201cCel\u201d for Temperature in Celcius."
       }
     ]
   },
   {
-    "name": "IPSO Power Control",
+    "name": "Power Control",
     "id": 3312,
     "instancetype": "multiple",
     "mandatory": false,
     "description": "Description: This Object is used to control a power source, such as a Smart Plug.  It allows a power relay to be turned on or off and its dimmer setting to be control as a % between 0 and 100.",
     "resourcedefs": [
       {
-        "id": 5805,
-        "name": "Cumulative active power ",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "float",
-        "range": "",
-        "units": "Wh",
-        "description": "The total power in Wh that has been used by the load."
-      },
-      {
-        "id": 5820,
-        "name": "Power factor",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "float",
-        "range": "",
-        "units": "",
-        "description": "The power factor of the load."
-      },
-      {
         "id": 5850,
-        "name": "On/Off",
+        "name": "On\/Off",
         "operations": "RW",
         "instancetype": "single",
         "mandatory": true,
         "type": "boolean",
         "range": "",
         "units": "",
-        "description": "This resource represents a power relay, which can be controlled, the setting of which is a Boolean value (1,0) where 1 is on and 0 is off."
+        "description": "This resource represents a power relay, which can be controlled, the setting of which is a boolean value (1,0) where 1 is on and 0 is off."
       },
       {
         "id": 5851,
@@ -2279,7 +2257,7 @@
         "type": "integer",
         "range": "0-100",
         "units": "%",
-        "description": "This resource represents a power dimmer setting, which has an Integer value between 0 and 100 as a percentage."
+        "description": "This resource represents a power dimmer setting, which has an integer value between 0 and 100 as a percentage."
       },
       {
         "id": 5852,
@@ -2291,16 +2269,82 @@
         "range": "",
         "units": "sec",
         "description": "The time in seconds that the power relay has been on. Writing a value of 0 resets the counter."
+      },
+      {
+        "id": 5805,
+        "name": "Cumulative active power",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Wh",
+        "description": "The total power in Wh that has been used by the load."
+      },
+      {
+        "id": 5820,
+        "name": "Power Factor",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "The power factor of the load."
       }
     ]
   },
   {
-    "name": "IPSO Accelerometer",
+    "name": "Accelerometer",
     "id": 3313,
     "instancetype": "multiple",
     "mandatory": false,
     "description": "Description: This IPSO object can be used to represent a 1-3 axis accelerometer.",
     "resourcedefs": [
+      {
+        "id": 5702,
+        "name": "X Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The measured value along the X axis."
+      },
+      {
+        "id": 5703,
+        "name": "Y Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The measured value along the Y axis."
+      },
+      {
+        "id": 5704,
+        "name": "Z Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The measured value along the Z axis."
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius."
+      },
       {
         "id": 5603,
         "name": "Min Range Value",
@@ -2309,7 +2353,7 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The minimum value that can be measured by the sensor"
       },
       {
@@ -2320,74 +2364,19 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The maximum value that can be measured by the sensor"
-      },
-      {
-        "id": 5701,
-        "name": "Sensor Units",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "string",
-        "range": "",
-        "units": "",
-        "description": "Measurement Units Definition e.g. “Cel” for Temperature in Celsius."
-      },
-      {
-        "id": 5702,
-        "name": "X Value",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": true,
-        "type": "float",
-        "range": "",
-        "units": "Defined by “Units” resource.",
-        "description": "The measured value along the X axis."
-      },
-      {
-        "id": 5703,
-        "name": "Y Value",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "float",
-        "range": "",
-        "units": "Defined by “Units” resource.",
-        "description": "The measured value along the Y axis."
-      },
-      {
-        "id": 5704,
-        "name": "Z Value",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "float",
-        "range": "",
-        "units": "Defined by “Units” resource.",
-        "description": "The measured value along the Z axis."
       }
     ]
   },
   {
-    "name": "IPSO Magnetometer",
+    "name": "Magnetometer",
     "id": 3314,
     "instancetype": "multiple",
     "mandatory": false,
     "description": "Description: This IPSO object can be used to represent a 1-3 axis magnetometer with optional compass direction.",
     "resourcedefs": [
       {
-        "id": 5701,
-        "name": "Sensor Units",
-        "operations": "R",
-        "instancetype": "single",
-        "mandatory": false,
-        "type": "string",
-        "range": "",
-        "units": "",
-        "description": "Measurement Units Definition e.g. “Cel” for Temperature in Celsius."
-      },
-      {
         "id": 5702,
         "name": "X Value",
         "operations": "R",
@@ -2395,7 +2384,7 @@
         "mandatory": true,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The measured value along the X axis."
       },
       {
@@ -2406,7 +2395,7 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The measured value along the Y axis."
       },
       {
@@ -2417,7 +2406,7 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The measured value along the Z axis."
       },
       {
@@ -2430,16 +2419,38 @@
         "range": "0-360",
         "units": "Deg",
         "description": "The compass direction"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius."
       }
     ]
   },
   {
-    "name": "IPSO Barometer",
+    "name": "Barometer",
     "id": 3315,
     "instancetype": "multiple",
     "mandatory": false,
-    "description": "Description: This IPSO object should be used with an air pressure sensor to report a barometer measurement.  It also provides resources for minimum/maximum measured values and the minimum/maximum range that can be measured by the barometer sensor. An example measurement unit is kPa (ucum:kPa).",
+    "description": "Description: This IPSO object should be used with an air pressure sensor to report a barometer measurement.  It also provides resources for minimum\/maximum measured values and the minimum\/maximum range that can be measured by the barometer sensor. An example measurement unit is kPa (ucum:kPa).",
     "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
       {
         "id": 5601,
         "name": "Min Measured Value",
@@ -2448,7 +2459,7 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The minimum value measured by the sensor since power ON or reset"
       },
       {
@@ -2459,7 +2470,7 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The maximum value measured by the sensor since power ON or reset"
       },
       {
@@ -2470,7 +2481,7 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The minimum value that can be measured by the sensor"
       },
       {
@@ -2481,7 +2492,104 @@
         "mandatory": false,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "If present, the type of sensor defined as the UCUM Unit Definition e.g. \u201cCel\u201d for Temperature in Celcius."
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      }
+    ]
+  },
+  {
+    "name": "Voltage",
+    "id": 3316,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used with voltmeter sensor to report measured voltage between two points.  It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is volts (ucum: V).\n        ",
+    "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "The maximum value that can be measured by the sensor"
       },
       {
@@ -2496,6 +2604,37 @@
         "description": "Reset the Min and Max Measured Values to Current Value"
       },
       {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Current",
+    "id": 3317,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used with an ammeter to report measured electric current in amperes. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is volts (ucum: A).\n        ",
+    "resourcedefs": [
+      {
         "id": 5700,
         "name": "Sensor Value",
         "operations": "R",
@@ -2503,8 +2642,1520 @@
         "mandatory": true,
         "type": "float",
         "range": "",
-        "units": "Defined by “Units” resource.",
+        "units": "Defined by \u201cUnits\u201d resource.",
         "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      },
+      {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Frequency",
+    "id": 3318,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used to report frequency measurements. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is volts (ucum: Hz).\n        ",
+    "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      },
+      {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Depth",
+    "id": 3319,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used to report depth measurements. It can, for example, be used to describe a generic rain gauge that measures the accumulated rainfall in millimetres (mm) or in fathoms (fth).\n        ",
+    "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      },
+      {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Percentage",
+    "id": 3320,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should can be used to report measurements relative to a 0-100% scale. For example it could be used to measure the level of a liquid in a vessel or container in units of %.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      },
+      {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Altitude",
+    "id": 3321,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used with an altitude sensor to report altitude above sea level in meters. Note that Altitude can be calculated from the measured pressure given the local sea level pressure.  It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is meters (ucum: m).\n        ",
+    "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      },
+      {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Load",
+    "id": 3322,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used with a load sensor (as in a scale) to report the applied weight or force. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is kilograms (ucum: Kg).\n        ",
+    "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      },
+      {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Pressure",
+    "id": 3323,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used to report pressure measurements. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is pascals (ucum: Pa).\n        ",
+    "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      },
+      {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Loudness",
+    "id": 3324,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used to report loudness or noise level measurements. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is decibels (ucum: dB).\n        ",
+    "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      },
+      {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Concentration",
+    "id": 3325,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used to the particle concentration measurement of a medium. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is parts per million  (ucum: ppm).\n        ",
+    "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      },
+      {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Acidity",
+    "id": 3326,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used to report an acidity measurement of a liquid. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is pH.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      },
+      {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Conductivity",
+    "id": 3327,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used to report a measurement of the electric conductivity of a medium or sample. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is Siemens (ucum: S).\n        ",
+    "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      },
+      {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Power",
+    "id": 3328,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used to report power measurements. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is Watts (ucum: W). This resource may be used for either real power or apparent power (units= ucum:VA) measurements. The Application type can be use for reactive power or active power for example.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      },
+      {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Power Factor",
+    "id": 3329,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used to report a measurement or calculation of the power factor of a reactive electrical load. Power Factor is normally the ratio of non-reactive power to total power. This object also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      },
+      {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Distance",
+    "id": 3330,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used to report a distance measurement. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is Meters (ucum: m).\n        ",
+    "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      },
+      {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Energy",
+    "id": 3331,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used to report energy consumption (Cumulative Power) of an electrical load. An example measurement unit is Watt Hours (ucum:W*h).\n        ",
+    "resourcedefs": [
+      {
+        "id": 5805,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor."
       },
       {
         "id": 5701,
@@ -2515,7 +4166,1337 @@
         "type": "string",
         "range": "",
         "units": "",
-        "description": "If present, the type of sensor defined as the UCUM Unit Definition e.g. “Cel” for Temperature in Celcius."
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius."
+      },
+      {
+        "id": 5822,
+        "name": "Reset Cumulative Energy",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset both cumulative active\/reactive power."
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
+      }
+    ]
+  },
+  {
+    "name": "Direction",
+    "id": 3332,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object is used to report the direction indicated by a compass, wind vane, or other directional indicator. The units of measure is plane angle degrees (ucum:deg).\n        ",
+    "resourcedefs": [
+      {
+        "id": 5705,
+        "name": "Compass Direction",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "0-360",
+        "units": "deg",
+        "description": "This indicates the compass direction of some phenomenon (i.e. direction of travel, wind direction\u2026)."
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "The minimum value measured by the sensor since power ON or reset."
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "The maximum value measured by the sensor since power ON or reset."
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value."
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
+      }
+    ]
+  },
+  {
+    "name": "time",
+    "id": 3333,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object is used to report the current time in seconds since January 1, 1970 UTC. There is also a fractional time counter that has a range of less than one second.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5506,
+        "name": "Current Time",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "time",
+        "range": "",
+        "units": "s",
+        "description": "Unix Time. A signed integer representing the number of seconds since Jan 1st, 1970 in the UTC time zone."
+      },
+      {
+        "id": 5507,
+        "name": "Fractional Time",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "0-1",
+        "units": "seconds",
+        "description": "For shorter times of a fraction of a second (i.e. 0.23)."
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
+      }
+    ]
+  },
+  {
+    "name": "Gyrometer",
+    "id": 3334,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO Object is used to report the current reading of a gyrometer sensor in 3 axes. It provides tracking of the minimum and maximum angular rate in all 3 axes. An example unit of measure is radians per second (ucum:rad\/s).\n        ",
+    "resourcedefs": [
+      {
+        "id": 5702,
+        "name": "X Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The measured value along the X axis."
+      },
+      {
+        "id": 5703,
+        "name": "Y Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The measured value along the Y axis."
+      },
+      {
+        "id": 5704,
+        "name": "Z Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The measured value along the Z axis."
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius."
+      },
+      {
+        "id": 5508,
+        "name": "Min X Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum measured value along the X axis"
+      },
+      {
+        "id": 5509,
+        "name": "Max X Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum measured value along the X axis"
+      },
+      {
+        "id": 5510,
+        "name": "Min Y Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum measured value along the Y axis"
+      },
+      {
+        "id": 5511,
+        "name": "Max Y Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum measured value along the Y axis"
+      },
+      {
+        "id": 5512,
+        "name": "Min Z Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum measured value along the Z axis"
+      },
+      {
+        "id": 5513,
+        "name": "Max Z Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum measured value along the Z axis"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value."
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
+      }
+    ]
+  },
+  {
+    "name": "Colour",
+    "id": 3335,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used to report the measured value of a colour sensor in some colour space described by the units resource.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5706,
+        "name": "Colour",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "A string representing a value in some colour space."
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. \u201cCel\u201d for Temperature in Celsius."
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
+      }
+    ]
+  },
+  {
+    "name": "Location",
+    "id": 3336,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object represents GPS coordinates. This object is compatible with the LWM2M management object for location, but uses reusable resources.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5514,
+        "name": "Latitude",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The decimal notation of latitude, e.g. -43.5723 (World Geodetic System 1984)."
+      },
+      {
+        "id": 5515,
+        "name": "Longitude",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The decimal notation of longitude, e.g. 153.21760 (World Geodetic System 1984)."
+      },
+      {
+        "id": 5516,
+        "name": "Uncertainty",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The accuracy of the position in meters."
+      },
+      {
+        "id": 5705,
+        "name": "Compass Direction",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "0-360",
+        "units": "Degrees",
+        "description": "Measured Direction."
+      },
+      {
+        "id": 5517,
+        "name": "Velocity",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "The velocity of the device as defined in 3GPP 23.032 GAD specification. This set of values may not be available if the device is static."
+      },
+      {
+        "id": 5518,
+        "name": "Timestamp",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "time",
+        "range": "",
+        "units": "",
+        "description": "The timestamp of when the location measurement was performed."
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
+      }
+    ]
+  },
+  {
+    "name": "Positioner",
+    "id": 3337,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used with a generic position actuator from 0 to 100%. This resource optionally allows setting the transition time for an operation that changes the position of the actuator, and for reading the remaining time of the currently active transition.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5536,
+        "name": "Current Position",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "0-100",
+        "units": "%",
+        "description": "Current position or desired position of a positioner actuator."
+      },
+      {
+        "id": 5537,
+        "name": "Transition Time",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "s",
+        "description": "The time expected to move the actuator to the new position."
+      },
+      {
+        "id": 5538,
+        "name": "Remaining Time",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "s",
+        "description": "The time remaining in an operation."
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "Same as Measured Value",
+        "units": "Same as Measured Value",
+        "description": "The minimum value set on the actuator since power ON or reset."
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "Same as Measured Value",
+        "units": "Same as Measured Value",
+        "description": "The maximum value set on the actuator since power ON or reset."
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Value",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value."
+      },
+      {
+        "id": 5519,
+        "name": "Min Limit",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "Same as Measured Value",
+        "units": "Same as Measured Value",
+        "description": "The minimum value that can be measured by the sensor."
+      },
+      {
+        "id": 5520,
+        "name": "Max Limit",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "Same as Measured Value",
+        "units": "Same as Measured Value",
+        "description": "The maximum value that can be measured by the sensor."
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
+      }
+    ]
+  },
+  {
+    "name": "Buzzer",
+    "id": 3338,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used to actuate an audible alarm such as a buzzer, beeper, or vibration alarm. There is a dimmer control for setting the relative loudness of the alarm, and an optional duration control to limit the length of time the alarm sounds when turned on. Each time a \u201c1\u201d is written to the On\/Off resource, the alarm will sound again for the configured duration. If no duration is programmed or the setting is zero, writing a \u201c1\u201d to the On\/Off resource will result in the alarm sounding continuously until a \u201c0\u201d is written to the On\/Off resource.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5850,
+        "name": "On\/Off",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "boolean",
+        "range": "",
+        "units": "",
+        "description": "On\/Off control, 0=OFF, 1=ON."
+      },
+      {
+        "id": 5851,
+        "name": "Dimmer",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "0-100",
+        "units": "%",
+        "description": "Proportional control, integer value between 0 and 100 as a percentage."
+      },
+      {
+        "id": 5521,
+        "name": "Delay Duration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "s",
+        "description": "The duration of the time delay."
+      },
+      {
+        "id": 5525,
+        "name": "Minimum Off-time",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "s",
+        "description": "The off time when On\/Off control remains on."
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
+      }
+    ]
+  },
+  {
+    "name": "Audio Clip",
+    "id": 3339,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used for a speaker that plays a pre-recorded audio clip or an audio output that is sent elsewhere. For example, an elevator which announces the floor of the building. A resource is provided to store the clip, a dimmer resource controls the relative sound level of the playback, and a duration resource limits the maximum playback time. After the duration time is reached, any remaining samples in the clip are ignored, and the clip player will be ready to play another clip.",
+    "resourcedefs": [
+      {
+        "id": 5522,
+        "name": "Clip",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Audio Clip that is playable (i.e. short audio recording indicating the floor in an elevator)."
+      },
+      {
+        "id": 5523,
+        "name": "Trigger",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Trigger initiating actuation."
+      },
+      {
+        "id": 5851,
+        "name": "Dimmer",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "0-100",
+        "units": "%",
+        "description": "Proportional control, integer value between 0 and 100 as a percentage."
+      },
+      {
+        "id": 5524,
+        "name": "Duration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "seconds",
+        "description": "The duration of the sound once trigger."
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
+      }
+    ]
+  },
+  {
+    "name": "Timer",
+    "id": 3340,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object is used to time events and actions, using patterns common to industrial timers. A POST to the trigger resource or On\/Off input state change starts the timing operation, and the timer remaining time shows zero when the operation is complete. The patterns supported are One-Shot (mode 1), On-Time or Interval (mode 2), Time delay on pick-up or TDPU (tmode 3), and Time Delay on Drop-Out or TDDO (mode 4). Mode 0 disables the timer, so the output follows the input with no delay. A counter is provided to count occurrences of the timer output changing from 0 to 1. Writing a value of zero resets the counter. The Digital Input State resource reports the state of the timer output.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5521,
+        "name": "Duration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "s",
+        "description": "The duration of the time delay."
+      },
+      {
+        "id": 5538,
+        "name": "Remaining Time",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "s",
+        "description": "The time remaining in an operation."
+      },
+      {
+        "id": 5525,
+        "name": "Minimum Off-time",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "s",
+        "description": "The duration of the rearm delay (i.e. the delay from the end of one cycle until the beginning of the next, the inhibit time)."
+      },
+      {
+        "id": 5523,
+        "name": "Trigger",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Trigger initiating actuation."
+      },
+      {
+        "id": 5850,
+        "name": "On\/Off",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "boolean",
+        "range": "",
+        "units": "",
+        "description": "On\/off control for the timer input, 0=OFF, 1=ON."
+      },
+      {
+        "id": 5501,
+        "name": "Digital Input Counter",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "",
+        "description": "The number of times the input."
+      },
+      {
+        "id": 5544,
+        "name": "Cumulative Time",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "s",
+        "description": "The total time in seconds that the timer input is true. Writing a 0 resets the time."
+      },
+      {
+        "id": 5543,
+        "name": "Digital State",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "boolean",
+        "range": "",
+        "units": "",
+        "description": "The current state of the timer output."
+      },
+      {
+        "id": 5534,
+        "name": "Counter",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "",
+        "description": "Counts the number of times the timer output transitions from 0 to 1."
+      },
+      {
+        "id": 5526,
+        "name": "Mode",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "0-4",
+        "units": "",
+        "description": "Type of timer pattern used by the patterns."
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
+      }
+    ]
+  },
+  {
+    "name": "Addressable Text Display",
+    "id": 3341,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object is used to send text to a text-only or text mode graphics display. POSTing a string of text to the text resource causes it to be displayed at the selected X and Y locations on the display. If X or Y are set to a value greater than the size of the display, the position \u201cwraps around\u201d to the modulus of the setting and the display size. Likewise, if the text string overflows the display size, the text \u201cwraps around\u201d and displays on the next line down or, if the last line has been written, wraps around to the top of the display. Brightness and Contrast controls are provided to allow control of various display types including STN and DSTN type LCD character displays. POSTing an empty payload to the Clear Display resource causes the display to be erased.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5527,
+        "name": "Text",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "A string of text."
+      },
+      {
+        "id": 5528,
+        "name": "X Coordinate",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "",
+        "description": "X Coordinate."
+      },
+      {
+        "id": 5529,
+        "name": "Y Coordinate",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "",
+        "description": "Y Coordinate."
+      },
+      {
+        "id": 5545,
+        "name": "Max X Coordinate",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "",
+        "description": "The highest X coordinate the display supports before wrapping to the next line."
+      },
+      {
+        "id": 5546,
+        "name": "Max Y Coordinate",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "",
+        "description": "The highest Y coordinate the display supports before wrapping to the next line."
+      },
+      {
+        "id": 5530,
+        "name": "Clear Display",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Command to clear the display."
+      },
+      {
+        "id": 5851,
+        "name": "Dimmer",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "0-100",
+        "units": "%",
+        "description": "Proportional control, integer value between 0 and 100 as a percentage."
+      },
+      {
+        "id": 5531,
+        "name": "Contrast",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "0-100",
+        "units": "%",
+        "description": "Proportional control, integer value between 0 and 100 as a percentage."
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
+      }
+    ]
+  },
+  {
+    "name": "On\/Off switch",
+    "id": 3342,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used with an On\/Off switch to report the state of the switch.",
+    "resourcedefs": [
+      {
+        "id": 5500,
+        "name": "Digital Input State",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "boolean",
+        "range": "",
+        "units": "",
+        "description": "The current state of a digital input."
+      },
+      {
+        "id": 5501,
+        "name": "Digital Input Counter",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "",
+        "description": "The number of times the input transitions from 0 to 1."
+      },
+      {
+        "id": 5852,
+        "name": "On Time",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "s",
+        "description": "The time in seconds since the On command was sent. Writing a value of 0 resets the counter."
+      },
+      {
+        "id": 5854,
+        "name": "Off Time",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "s",
+        "description": "The time in seconds since the Off command was sent. Writing a value of 0 resets the counter."
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
+      }
+    ]
+  },
+  {
+    "name": "Dimmer",
+    "id": 3343,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object should be used with a dimmer or level control to report the state of the control.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5851,
+        "name": "Dimmer",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "0-100",
+        "units": "%",
+        "description": "Proportional control, integer value between 0 and 100 as a percentage."
+      },
+      {
+        "id": 5852,
+        "name": "On Time",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "s",
+        "description": "The time in seconds that the dimmer has been on (Dimmer value has to be > 0). Writing a value of 0 resets the counter."
+      },
+      {
+        "id": 5854,
+        "name": "Off Time",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "s",
+        "description": "The time in seconds that the dimmer has been off  (dimmer value less or equal to 0) Writing a value of 0 resets the counter. "
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Up\/Down Control",
+    "id": 3344,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object is used to report the state of an up\/down control element like a pair of push buttons or a rotary encoder. Counters for increase and decrease operations are provided for counting pulses from a quadrature encoder.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5532,
+        "name": "Increase Input State",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "boolean",
+        "range": "",
+        "units": "",
+        "description": "Indicates an increase control action."
+      },
+      {
+        "id": 5533,
+        "name": "Decrease Input State",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "boolean",
+        "range": "",
+        "units": "",
+        "description": "Indicates a decrease control action."
+      },
+      {
+        "id": 5541,
+        "name": "Up Counter",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "",
+        "description": "Counts the number of times the increase control has been operated. Writing a 0 resets the counter."
+      },
+      {
+        "id": 5542,
+        "name": "Down Counter",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "",
+        "description": "Counts the times the decrease control has been operated. Writing a 0 resets the counter."
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
+      }
+    ]
+  },
+  {
+    "name": "multiple Axis Joystick",
+    "id": 3345,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object can be used to report the position of a shuttle or joystick control. A digital input is provided to report the state of an associated push button.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5500,
+        "name": "Digital Input State",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "boolean",
+        "range": "",
+        "units": "",
+        "description": "The current state of a digital input."
+      },
+      {
+        "id": 5501,
+        "name": "Digital Input Counter",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "",
+        "description": "The number of times the input transitions from 0 to 1."
+      },
+      {
+        "id": 5702,
+        "name": "X Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The measured value along the X axis."
+      },
+      {
+        "id": 5703,
+        "name": "Y Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The measured value along the Y axis."
+      },
+      {
+        "id": 5704,
+        "name": "Z Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The measured value along the Z axis."
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
+      }
+    ]
+  },
+  {
+    "name": "Rate",
+    "id": 3346,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This object type should be used to report a rate measurement, for example the speed of a vehicle, or the rotational speed of a drive shaft. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor.An example measurement unit is Feet per Second (ucum:ft_us\/s).\n        ",
+    "resourcedefs": [
+      {
+        "id": 5700,
+        "name": "Sensor Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "Last or Current Measured Value from the Sensor"
+      },
+      {
+        "id": 5701,
+        "name": "Sensor Units",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "",
+        "description": "Measurement Units Definition e.g. Rate, example units = Feet per Second"
+      },
+      {
+        "id": 5601,
+        "name": "Min Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5602,
+        "name": "Max Measured Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value measured by the sensor since power ON or reset"
+      },
+      {
+        "id": 5603,
+        "name": "Min Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The minimum value that can be measured by the sensor"
+      },
+      {
+        "id": 5604,
+        "name": "Max Range Value",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "float",
+        "range": "",
+        "units": "Defined by \u201cUnits\u201d resource.",
+        "description": "The maximum value that can be measured by the sensor"
+      },
+      {
+        "id": 5605,
+        "name": "Reset Min and Max Measured Values",
+        "operations": "E",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "Reset the Min and Max Measured Values to Current Value"
+      },
+      {
+        "id": 5821,
+        "name": "Current Calibration",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "Read or Write the current calibration coefficient"
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case"
+      }
+    ]
+  },
+  {
+    "name": "Push button",
+    "id": 3347,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object is used to report the state of a momentary action push button control and to count the number of times the control has been operated since the last observation.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5500,
+        "name": "Digital Input State",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "boolean",
+        "range": "",
+        "units": "",
+        "description": "The current state of a digital input."
+      },
+      {
+        "id": 5501,
+        "name": "Digital Input State",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "",
+        "units": "",
+        "description": "The number of times the input transitions from 0 to 1."
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
+      }
+    ]
+  },
+  {
+    "name": "Multi-state Selector",
+    "id": 3348,
+    "instancetype": "multiple",
+    "mandatory": false,
+    "description": "This IPSO object is used to represent the state of a Multi-state selector switch with a number of fixed positions.\n        ",
+    "resourcedefs": [
+      {
+        "id": 5547,
+        "name": "Multi-state Input",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "integer",
+        "range": "",
+        "units": "",
+        "description": "The current state of a Multi-state input or selector."
+      },
+      {
+        "id": 5750,
+        "name": "Application Type",
+        "operations": "RW",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "The application type of the sensor or actuator as a string depending on the use case."
       }
     ]
   }
