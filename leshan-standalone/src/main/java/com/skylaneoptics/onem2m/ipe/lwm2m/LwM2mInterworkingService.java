@@ -150,8 +150,10 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
     }
 
     private String toString(LinkObject[] objectLinks) {
+        if (objectLinks == null)
+            return "";
         StringBuilder sb = new StringBuilder();
-        for(LinkObject link : objectLinks) {
+        for (LinkObject link : objectLinks) {
             sb.append(link.getUrl()).append(" ");
         }
         return sb.toString();
@@ -300,7 +302,6 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
     private static final long TIMEOUT = 20000; // ms
 
 
-
     private String readString(Client client, Integer objectId, Integer objectInstanceId, Integer resourceId) {
         try {
             return (String) this.readResource(client, objectId, objectInstanceId, resourceId).getValue();
@@ -337,11 +338,27 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
         }
     }
 
-    protected LinkObject[] discoverResources(Client client, String target) {
+    private LinkObject[] discoverResources(Client client, String target) {
+
+        if ("false".equals(properties.getProperty("com.skylaneoptics.onem2m.ipe.lwm2m.discovery", "true")))
+            return new LinkObject[0];
+
+        LOG.info("Discovering resources [endpoint: {}, address: {}, target: {}] ...", client.getEndpoint(), client.getAddress().toString(), target);
+
         DiscoverRequest request = new DiscoverRequest(target);
         DiscoverResponse response = this.leshanServer.send(client, request, TIMEOUT);
 
-        return response.getObjectLinks();
+        // TODO check why no response from the discovery request to the SensorTag (JIRA: https://jira.senzor.be/browse/SEN-168)
+        if (response == null)
+            return new LinkObject[0];
+
+        LOG.info("Response from discovering request: [{}]", response.getCode());
+
+        LinkObject[] objectLinks = response.getObjectLinks();
+
+        LOG.info("Discovered resources: [{}].", toString(objectLinks));
+
+        return objectLinks == null ? new LinkObject[0] : objectLinks;
     }
 
     protected LwM2mResource readResource(Client client, Integer objectId, Integer objectInstanceId, Integer resourceId) {
@@ -420,8 +437,8 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
 
             SmartObject smartObject = SmartObjects.get(link.getObjectId());
 
-            if (smartObject == null)
-                continue;
+            LOG.info("Found related smart object [" + smartObject.getName() + "] for link [" + link.getUrl() + "].");
+
 
             Tuple<SmartObject, Obj> tuple = instances.get(link.getUrl());
             if (tuple == null) {
@@ -437,10 +454,28 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
             // Discover resources under the current link
             LinkObject[] resources = discoverResources(client, link.getUrl());
 
-            for(LinkObject resourceLink: resources) {
+            if (resources.length == 0) {
+                // no resource discovered, populate with default resource definitions
+                for (com.skylaneoptics.ipso.Resource resource : smartObject.getResourcedefs()) {
+                    populateObj(obj, client, link, resource);
+                }
+            }
+
+            for (LinkObject resourceLink : resources) {
                 com.skylaneoptics.ipso.Resource resource = getResourceFromLinkObject(resourceLink, smartObject);
                 if (resource != null) {
-                //if ((link.getResourceId() != null && link.getResourceId() == resource.getId())) {
+                    populateObj(obj, client, link, resource);
+                }
+
+            }
+        }
+
+
+        return instances.values();
+    }
+
+    private void populateObj(Obj obj, Client client, LinkObject link, com.skylaneoptics.ipso.Resource resource) {
+        //if ((link.getResourceId() != null && link.getResourceId() == resource.getId())) {
                     /*if (resource.getOperations().contains("R")) {
                         // OP Read
                         Op opRead = new Op();
@@ -455,39 +490,34 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
                         obj.add(opRead);
                     }*/
 
-                    if ("string".equals(resource.getType())) {
-                        Str str = new Str(resource.getName(), readString(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
-                        str.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
-                        str.setWritable(resource.getOperations().contains("W"));
-                        obj.add(str);
-                    } else if ("integer".equals(resource.getType())) {
-                        Int anInt = new Int(resource.getName(), readInteger(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
-                        anInt.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
-                        anInt.setWritable(resource.getOperations().contains("W"));
-                        obj.add(anInt);
-                    } else if ("boolean".equals(resource.getType())) {
-                        Bool bool = new Bool(resource.getName(), readBoolean(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
-                        bool.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
-                        bool.setWritable(resource.getOperations().contains("W"));
-                        obj.add(bool);
-                    } else if ("float".equals(resource.getType())) {
-                        Real real = new Real(resource.getName(), readFloat(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
-                        real.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
-                        obj.add(real);
-                    }
-                }
-
-            }
+        if ("string".equalsIgnoreCase(resource.getType())) {
+            Str str = new Str(resource.getName(), readString(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
+            str.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
+            str.setWritable(resource.getOperations().contains("W"));
+            obj.add(str);
+        } else if ("integer".equalsIgnoreCase(resource.getType())) {
+            Int anInt = new Int(resource.getName(), readInteger(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
+            anInt.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
+            anInt.setWritable(resource.getOperations().contains("W"));
+            obj.add(anInt);
+        } else if ("boolean".equalsIgnoreCase(resource.getType())) {
+            Bool bool = new Bool(resource.getName(), readBoolean(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
+            bool.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
+            bool.setWritable(resource.getOperations().contains("W"));
+            obj.add(bool);
+        } else if ("float".equalsIgnoreCase(resource.getType())) {
+            Real real = new Real(resource.getName(), readFloat(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
+            real.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
+            obj.add(real);
         }
-
-
-        return instances.values();
     }
 
     private com.skylaneoptics.ipso.Resource getResourceFromLinkObject(LinkObject resourceLink, SmartObject smartObject) {
-        for (com.skylaneoptics.ipso.Resource resource : smartObject.getResourcedefs()) {
-            if (resource.getId() == resourceLink.getResourceId())
-                return resource;
+        if (resourceLink.getResourceId() != null) {
+            for (com.skylaneoptics.ipso.Resource resource : smartObject.getResourcedefs()) {
+                if (resource.getId() == resourceLink.getResourceId())
+                    return resource;
+            }
         }
 
         return null;
