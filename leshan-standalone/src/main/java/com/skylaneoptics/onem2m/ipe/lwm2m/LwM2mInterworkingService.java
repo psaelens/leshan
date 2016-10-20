@@ -1,7 +1,7 @@
 package com.skylaneoptics.onem2m.ipe.lwm2m;
 
+import com.skylaneoptics.ipso.ObjectModels;
 import com.skylaneoptics.ipso.SmartObject;
-import com.skylaneoptics.ipso.SmartObjects;
 import com.skylaneoptics.onem2m.io.OneM2mEncoder;
 import com.skylaneoptics.utils.Tuple;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -13,6 +13,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.leshan.LinkObject;
 import org.eclipse.leshan.ResponseCode;
+import org.eclipse.leshan.core.model.ObjectModel;
+import org.eclipse.leshan.core.model.ResourceModel;
 import org.eclipse.leshan.core.node.LwM2mNode;
 import org.eclipse.leshan.core.node.LwM2mResource;
 import org.eclipse.leshan.core.node.LwM2mSingleResource;
@@ -41,7 +43,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.*;
-import java.util.List;
 
 /**
  * oneM2M Interworking Proxy Entity (IPE) for LWM2M.
@@ -117,7 +118,7 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
             SmartObject smartObject = tuple.getFirst();
             // create Container representing the SmartObject
             Cnt cnt = new Cnt();
-            String smartObjectName = normalise(smartObject.getName()) + "-" + smartObject.getInstanceId();
+            String smartObjectName = normalise(smartObject.getModel().name) + "-" + smartObject.getInstanceId();
             cnt.setRn(smartObjectName);
             //cnt.getLbl().add("type/smartobject");
 
@@ -191,7 +192,7 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
             SmartObject smartObject = tuple.getFirst();
             Obj obj = tuple.getSecond();
 
-            String smartObjectName = normalise(smartObject.getName()) + "-" + smartObject.getInstanceId();
+            String smartObjectName = normalise(smartObject.getModel().name) + "-" + smartObject.getInstanceId();
 
             // content instance
             Cin cin = new Cin();
@@ -383,15 +384,15 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
     // --------------------------------------------------------------------- Utils
     // -----------------------------------------------------------------------------------------------------------
     private Tuple<SmartObject, Obj> toObix(Client client, Observation observation, LwM2mNode value) {
-        SmartObject smartObject = SmartObjects.get(observation.getPath().getObjectId());
+        ObjectModel model = ObjectModels.get(observation.getPath().getObjectId());
 
-        if (smartObject != null) {
+        if (model != null) {
             if (observation.getPath().getObjectInstanceId() == null) {
                 // TODO handle observation on object id
                 return null;
             }
 
-            smartObject = smartObject.instance(observation.getPath().getObjectInstanceId());
+            SmartObject smartObject = new SmartObject(model, observation.getPath().getObjectInstanceId());
 
             if (value instanceof LwM2mSingleResource) {
                 // handle single resource observation.
@@ -435,16 +436,16 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
             if (link.getObjectId() == null || link.getObjectInstanceId() == null || link.getResourceId() != null)
                 continue;
 
-            SmartObject smartObject = SmartObjects.get(link.getObjectId());
+            ObjectModel model = ObjectModels.get(link.getObjectId());
 
-            LOG.info("Found related smart object [" + smartObject.getName() + "] for link [" + link.getUrl() + "].");
+            LOG.info("Found related smart object [" + model.name + "] for link [" + link.getUrl() + "].");
 
 
             Tuple<SmartObject, Obj> tuple = instances.get(link.getUrl());
             if (tuple == null) {
-                SmartObject instance = smartObject.instance(link.getObjectInstanceId());
+                SmartObject instance = new SmartObject(model, (link.getObjectInstanceId()));
                 tuple = new Tuple<>(instance, new Obj());
-                tuple.getSecond().setIs(new Contract("ipso:" + smartObject.getId()));
+                tuple.getSecond().setIs(new Contract("ipso:" + model.id));
                 tuple.getSecond().setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + "/" + link.getUrl());
                 instances.put(link.getUrl(), tuple);
             }
@@ -456,13 +457,13 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
 
             if (resources.length == 0) {
                 // no resource discovered, populate with default resource definitions
-                for (com.skylaneoptics.ipso.Resource resource : smartObject.getResourcedefs()) {
+                for (ResourceModel resource : model.resources.values()) {
                     populateObj(obj, client, link, resource);
                 }
             }
 
             for (LinkObject resourceLink : resources) {
-                com.skylaneoptics.ipso.Resource resource = getResourceFromLinkObject(resourceLink, smartObject);
+                ResourceModel resource = getResourceFromLinkObject(resourceLink, model);
                 if (resource != null) {
                     populateObj(obj, client, link, resource);
                 }
@@ -474,7 +475,7 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
         return instances.values();
     }
 
-    private void populateObj(Obj obj, Client client, LinkObject link, com.skylaneoptics.ipso.Resource resource) {
+    private void populateObj(Obj obj, Client client, LinkObject link, ResourceModel resource) {
         //if ((link.getResourceId() != null && link.getResourceId() == resource.getId())) {
                     /*if (resource.getOperations().contains("R")) {
                         // OP Read
@@ -490,32 +491,40 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
                         obj.add(opRead);
                     }*/
 
-        if ("string".equalsIgnoreCase(resource.getType())) {
-            Str str = new Str(resource.getName(), readString(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
-            str.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
-            str.setWritable(resource.getOperations().contains("W"));
-            obj.add(str);
-        } else if ("integer".equalsIgnoreCase(resource.getType())) {
-            Int anInt = new Int(resource.getName(), readInteger(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
-            anInt.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
-            anInt.setWritable(resource.getOperations().contains("W"));
-            obj.add(anInt);
-        } else if ("boolean".equalsIgnoreCase(resource.getType())) {
-            Bool bool = new Bool(resource.getName(), readBoolean(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
-            bool.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
-            bool.setWritable(resource.getOperations().contains("W"));
-            obj.add(bool);
-        } else if ("float".equalsIgnoreCase(resource.getType())) {
-            Real real = new Real(resource.getName(), readFloat(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
-            real.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
-            obj.add(real);
+        switch (resource.type) {
+            case STRING:
+                Str str = new Str(resource.name, readString(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
+                str.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
+                str.setWritable(resource.operations.isWritable());
+                obj.add(str);
+                break;
+            case INTEGER:
+                Int anInt = new Int(resource.name, readInteger(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
+                anInt.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
+                anInt.setWritable(resource.operations.isWritable());
+                obj.add(anInt);
+                break;
+            case BOOLEAN:
+                Bool bool = new Bool(resource.name, readBoolean(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
+                bool.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
+                bool.setWritable(resource.operations.isWritable());
+                obj.add(bool);
+                break;
+            case FLOAT:
+                Real real = new Real(resource.name, readFloat(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
+                real.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
+                obj.add(real);
+                break;
+            default:
+                LOG.warn("resource type [{}] not handled", resource.type);
         }
     }
 
-    private com.skylaneoptics.ipso.Resource getResourceFromLinkObject(LinkObject resourceLink, SmartObject smartObject) {
+
+    private ResourceModel getResourceFromLinkObject(LinkObject resourceLink, ObjectModel model) {
         if (resourceLink.getResourceId() != null) {
-            for (com.skylaneoptics.ipso.Resource resource : smartObject.getResourcedefs()) {
-                if (resource.getId() == resourceLink.getResourceId())
+            for (ResourceModel resource : model.resources.values()) {
+                if (resource.id == resourceLink.getResourceId())
                     return resource;
             }
         }

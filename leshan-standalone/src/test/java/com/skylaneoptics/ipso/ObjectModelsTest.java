@@ -1,21 +1,21 @@
 package com.skylaneoptics.ipso;
 
 import com.google.gson.Gson;
+import org.eclipse.leshan.core.model.ObjectModel;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
 /**
  * Created by pierre on 30/09/16.
  */
-public class SmartObjectsTest {
+public class ObjectModelsTest {
 
     @Test
     public void testThatAllWorks() {
-        List<SmartObject> all = SmartObjects.all();
+        List<ObjectModel> all = ObjectModels.all();
 
         assertNotNull(all);
         assertFalse(all.isEmpty());

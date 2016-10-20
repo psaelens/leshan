@@ -1,5 +1,7 @@
 package com.skylaneoptics.ipso;
 
+import org.eclipse.leshan.core.model.ObjectModel;
+
 import java.io.Closeable;
 import java.util.HashMap;
 import java.util.List;
@@ -7,65 +9,27 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Represent a Smart Object.
+ * Represent a Smart Object instance.
  *
  * @author Pierre Saelens
  */
-public class SmartObject implements Cloneable {
+public class SmartObject {
 
 
-    private int id;
-    private String name;
-    private String instancetype;
-    private boolean mandatory;
-    private List<Resource> resourcedefs;
+    private ObjectModel model;
 
-    private transient int instanceId;
+    private int instanceId;
 
-    public SmartObject(int id, String value) {
-        this.id = id;
-        this.name = value;
+    public SmartObject(ObjectModel model, int instanceId) {
+        this.model = model;
+        this.instanceId = instanceId;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getInstancetype() {
-        return instancetype;
-    }
-
-    public boolean isMandatory() {
-        return mandatory;
-    }
-
-    public List<Resource> getResourcedefs() {
-        return resourcedefs;
+    public ObjectModel getModel() {
+        return model;
     }
 
     public int getInstanceId() {
         return instanceId;
-    }
-
-    public void setInstanceId(int instanceId) {
-        this.instanceId = instanceId;
-    }
-
-    public SmartObject instance(int id) {
-        try {
-            SmartObject clone = (SmartObject) this.clone();
-            clone.setInstanceId(id);
-            return clone;
-        } catch (CloneNotSupportedException e) {
-            return new SmartObject(this.id, this.name);
-        }
-    }
-
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
     }
 }
