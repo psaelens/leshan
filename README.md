@@ -98,3 +98,20 @@ Modules
 `Leshan-bs-server` : a bootstarp demo server.  
 `Leshan-integration-tests` : integration automatic tests.  
 
+
+oneM2M IPE
+-----------------
+The demo server has been extended with a oneM2M Interworking Proxy.
+
+The IPE expects lwm2m request following the IPSO Smart Objects format.
+For each IPSO Smart Object, a oneM2M container is created with 2 sub-containers (DESCRIPTOR, DATA).
+The DESCRIPTOR content instance uses the oBIX format (generated from the IPSO Smart Objects definition) 
+
+The code related to the IPE is under leshan-standalone/src/main/java/com/skylaneoptics
+
+The IPE extension is started with the demo server (see [LeshanStandalone](leshan-standalone/src/main/java/org/eclipse/leshan/standalone/LeshanStandalone.java))
+```
+        // Add Extension
+        new LwM2mInterworkingService(lwServer, server);
+        LOG.info("LW-M2M IPE started");
+```
