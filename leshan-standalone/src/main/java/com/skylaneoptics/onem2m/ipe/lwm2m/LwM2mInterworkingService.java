@@ -494,25 +494,29 @@ public class LwM2mInterworkingService implements ClientRegistryListener, Observa
         switch (resource.type) {
             case STRING:
                 Str str = new Str(resource.name, readString(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
-                str.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
+                str.setHref(link.getUrl());
                 str.setWritable(resource.operations.isWritable());
+                str.setIs(new Contract("ipso:" + resource.id));
                 obj.add(str);
                 break;
             case INTEGER:
                 Int anInt = new Int(resource.name, readInteger(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
-                anInt.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
+                anInt.setHref(link.getUrl());
                 anInt.setWritable(resource.operations.isWritable());
+                anInt.setIs(new Contract("ipso:" + resource.id));
                 obj.add(anInt);
                 break;
             case BOOLEAN:
                 Bool bool = new Bool(resource.name, readBoolean(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
-                bool.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
+                bool.setHref(link.getUrl());
                 bool.setWritable(resource.operations.isWritable());
+                bool.setIs(new Contract("ipso:" + resource.id));
                 obj.add(bool);
                 break;
             case FLOAT:
                 Real real = new Real(resource.name, readFloat(client, link.getObjectId(), link.getObjectInstanceId(), link.getResourceId()));
-                real.setHref(httpServer.getURI() + "api/clients/" + client.getEndpoint() + link.getUrl());
+                real.setHref(link.getUrl());
+                real.setIs(new Contract("ipso:" + resource.id));
                 obj.add(real);
                 break;
             default:
