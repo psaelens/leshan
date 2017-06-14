@@ -1,0 +1,148 @@
+{
+  "frequency-sec": 60,
+
+  "end-point": {
+    "name": "Device%ID",
+    "domain": "domain",
+    "type": "Sensor",
+    "context": "",
+    "instance": "",
+    "lifetime-min": 60
+  },
+  "resources": [
+
+
+    {
+      "uri": "1/0",
+      "rt":  "",
+      "if": "",
+      "ct":   "0",
+      "methods": ["GET"],
+      "obs": false,
+      "values": ["coap://localhost"]
+    },
+
+    {
+      "uri": "3/0",
+      "rt":  "",
+      "if": "",
+      "ct":   "0",
+      "methods": ["GET"],
+      "obs": false,
+      "values": ["coap://localhost"]
+    },
+
+   
+    {
+      "uri": "3301/0",
+      "rt":  "",
+      "if": "",
+      "ct":  0,
+      "methods": ["GET"],
+      "obs": false,
+      "maxAge":60,
+      "values": ["coap://localhost"]
+    },
+    {
+      "uri": "3303/0",
+      "rt":  "",
+      "if": "",
+      "ct":  0,
+      "methods": ["GET"],
+      "obs": false,
+      "maxAge":60,
+      "values": ["coap://localhost"]
+    },
+     {
+      "uri": "/3303/0/5700",
+      "rt":  "",
+      "if": "",
+      "ct":  0,
+      "methods": ["GET"],
+      "obs": true,
+      "maxAge":60,
+      "values": ["%RND[15,30]"]
+    },
+    {
+      "uri": "/3303/0/5701",
+      "rt":  "",
+      "if": "",
+      "ct":  0,
+      "methods": ["GET"],
+      "obs": true,
+      "maxAge":60,
+      "values": ["Cel"]
+    },
+
+    {
+      "uri": "/3303/1/5700",
+      "rt":  "",
+      "if": "",
+      "ct":  0,
+      "methods": ["GET"],
+      "obs": true,
+      "maxAge":60,
+      "values": ["%RND[15,30]"]
+    },
+    {
+      "uri": "3303/1",
+      "rt":  "",
+      "if": "",
+      "ct":  0,
+      "methods": ["GET"],
+      "obs": false,
+      "maxAge":60,
+      "values": ["coap://localhost"]
+    },
+    {
+      "uri": "3303/2",
+      "rt":  "",
+      "if": "",
+      "ct":  0,
+      "methods": ["GET"],
+      "obs": false,
+      "maxAge":60,
+      "values": ["coap://localhost"]
+    },
+    {
+      "uri": "3303/3",
+      "rt":  "",
+      "if": "",
+      "ct":  0,
+      "methods": ["GET"],
+      "obs": false,
+      "maxAge":60,
+      "values": ["coap://localhost"]
+    },
+    {
+      "uri": "3304/0",
+      "rt":  "",
+      "if": "",
+      "ct":  0,
+      "methods": ["GET"],
+      "obs": false,
+      "maxAge":60,
+      "values": ["coap://localhost"]
+    },
+    {
+      "uri": "3315/0",
+      "rt":  "",
+      "if": "",
+      "ct":  0,
+      "methods": ["GET"],
+      "obs": false,
+      "maxAge":60,
+      "values": ["coap://localhost"]
+    },   
+    {
+      "uri": "3338/0",
+      "rt":  "",
+      "if": "",
+      "ct":  0,
+      "methods": ["GET"],
+      "obs": false,
+      "maxAge":60,
+      "values": ["coap://localhost"]
+    }  
+  ]
+}

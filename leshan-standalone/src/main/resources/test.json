@@ -1,0 +1,21 @@
+{
+  "sgn": {
+    "nev": {
+      "rep": {
+        "rn": "cin_666859905",
+        "ty": 4,
+        "ri": "/sbgw4/cin-666859905",
+        "pi": "/sbgw4/cnt-250107878",
+        "ct": "20161020T024925",
+        "lt": "20161020T024925",
+        "st": 0,
+        "cnf": "application/obix",
+        "cs": 272,
+        "con": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<obj>\n    <str val=\"Door_Sensor\" name=\"type\"/>\n    <str val=\"Thu Oct 20 02:49:25 EEST 2016\" name=\"date\"/>\n    <str val=\"HOME\" name=\"location\"/>\n    <str val=\"\" name=\"unit\"/>\n    <str val=\"true\" name=\"value\"/>\n</obj>\n"
+      },
+      "rss": 1
+    },
+    "sud": false,
+    "sur": "/sbgw4/sbgw4/NodOn_Door/Door_Sensor/DATA/sub_nodered"
+  }
+}
